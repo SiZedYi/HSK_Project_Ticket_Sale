@@ -229,7 +229,11 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         right_container.setMinimumSize(new Dimension(1130, 768));
         right_container.setPreferredSize(new Dimension(1130, 768));
         right_container.setLayout(new javax.swing.BoxLayout(right_container, javax.swing.BoxLayout.PAGE_AXIS));
-
+        
+        // Test Jframe
+        ListMovie listMovie = new ListMovie();
+        right_container.add(listMovie);
+        
         GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
