@@ -9,7 +9,7 @@ public class ConnectDB {
 	private String dataBaseName = "CinemaDatabase"; //Fill this parameter with database's name
 	private String localHost = "1433";
 	private String user = "sa";
-	private String password = "anhthang123";
+	private String password = "sapassword";
 	
 	private static ConnectDB instance = new ConnectDB();
 	
