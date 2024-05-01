@@ -1,7 +1,7 @@
 package enums;
 
 public enum TrangThaiPhim {
-  	SAPCHIEU("Sắp chiếu"),DANGCHIEU("Đang chiếu"); 
+  	SAP_CHIEU("Sắp chiếu"),DANG_CHIEU("Đang chiếu"); 
 	
 	private final String displayname;
 	

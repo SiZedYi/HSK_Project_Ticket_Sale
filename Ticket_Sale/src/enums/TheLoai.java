@@ -5,7 +5,7 @@ public enum TheLoai {
 	TINH_CAM("Tình cảm"),
 	HAI("Hài huớc"),
 	LANG_MAN("Lãng mạn"),
-	HOAT_HINNH("Hoạt hình"),
+	HOAT_HINH("Hoạt hình"),
 	HINH_SU("Hình sự"),
 	TAI_LIEU("Tài liệu");
 	

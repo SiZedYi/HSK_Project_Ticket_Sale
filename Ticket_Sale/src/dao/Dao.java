@@ -16,8 +16,11 @@ public abstract class Dao<T> {
 		this.tableName = tableName;
 	}
 	
+	public abstract T readRow(ResultSet	rs);
+	public abstract void insertingStatement(PreparedStatement stmt, T t);
+	public abstract void updatingStatement(PreparedStatement stmt, T t);
+	
 	public ArrayList<T> getAllData(){
-		/*
 		ArrayList<T> data = new ArrayList<T>();
 		try {
 			ConnectDB.getInstance();
@@ -27,28 +30,24 @@ public abstract class Dao<T> {
 			ResultSet rs = statement.executeQuery(getAllQuery);
 			
 			while(rs.next()) {
-				ReadRow();
+				data.add(readRow(rs));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}*/
-		System.out.println("1");
-		readRow();
-		System.out.println("2");
-		return null;
+		}
+		return data;
 	}
-	public abstract void readRow();
 	
-	public ArrayList<T> getById(){
+	public ArrayList<T> getByAttribute(String attribute, String filterValue){
 		ArrayList<T> data = new ArrayList<T>();
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement statement = null;
 		
 		try {
-			String query = "";
+			String query = "Select * from " + tableName + " where " + attribute + " = ?";
 			statement=con.prepareStatement(query);
-			statement.setString(1, query);
+			statement.setString(1, filterValue);
 			ResultSet rs = statement.executeQuery(query);
 			
 			while(rs.next()) {
@@ -64,9 +63,108 @@ public abstract class Dao<T> {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return data;
+	}
+	public ArrayList<T> getByAttribute(String attribute, int filterValue){
+		ArrayList<T> data = new ArrayList<T>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {
+			String query = "Select * from " + tableName + " where " + attribute + " = ?";
+			statement=con.prepareStatement(query);
+			statement.setInt(1, filterValue);
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				data.add(readRow(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				statement.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return data;
+	}
+	public ArrayList<T> getByAttribute(String attribute, boolean filterValue){
+		ArrayList<T> data = new ArrayList<T>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		
+		try {
+			String query = "Select * from " + tableName + " where " + attribute + " = ?";
+			statement=con.prepareStatement(query);
+			statement.setBoolean(1, filterValue);
+			ResultSet rs = statement.executeQuery(query);
+			
+			while(rs.next()) {
+				data.add(readRow(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				statement.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return data;
 	}
 	
-	public abstract T readRow(ResultSet	rs);
+
 	
+	
+	public boolean create(T t) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		int n = 0;
+		try {
+			insertingStatement(stmt, t);
+			n = stmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean update(T t) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		int n = 0;
+		try {
+			updatingStatement(stmt, t);
+			n = stmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+
 }

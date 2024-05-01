@@ -10,6 +10,7 @@ import enums.TrangThaiPhim;
 public class Phim {
 	private String maPhim;
 	private String tenPhim;
+	private String anhPhim;
 	private TrangThaiPhim trangThai;
 	private double gia;
 	private ArrayList<TheLoai> theLoai;
@@ -17,11 +18,12 @@ public class Phim {
 	
 	
 	
-	public Phim(String maPhim, String tenPhim, TrangThaiPhim trangThai, double gia, ArrayList<TheLoai> theLoai,
+	public Phim(String maPhim, String tenPhim, String anhPhim, TrangThaiPhim trangThai, double gia, ArrayList<TheLoai> theLoai,
 			GioiHanTuoi gioiHanTuoi) {
 		super();
 		this.maPhim = maPhim;
 		this.tenPhim = tenPhim;
+		this.anhPhim = anhPhim;
 		this.trangThai = trangThai;
 		this.gia = gia;
 		this.theLoai = theLoai;
@@ -38,6 +40,12 @@ public class Phim {
 	}
 	public void setTenPhim(String tenPhim) {
 		this.tenPhim = tenPhim;
+	}
+	public String getAnhPhim() {
+		return anhPhim;
+	}
+	public void setAnhPhim(String anhPhim) {
+		this.anhPhim = anhPhim;
 	}
 	public TrangThaiPhim getTrangThai() {
 		return trangThai;

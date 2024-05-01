@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -16,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import connectDB.ConnectDB;
 
 
 
@@ -230,6 +233,9 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         right_container.setPreferredSize(new Dimension(1130, 768));
         right_container.setLayout(new javax.swing.BoxLayout(right_container, javax.swing.BoxLayout.PAGE_AXIS));
 
+     // Test Jframe
+        ListMovie listMovie = new ListMovie();
+        right_container.add(listMovie);
         GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
@@ -264,7 +270,13 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
 	 }
 	 
 	 public static void main(String args[]) {
-	        new TrangChu().setVisible(true);
+		 try {
+				ConnectDB.getInstance().connect();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        new TrangChu().setVisible(true);
 	  }
 
 	@Override
