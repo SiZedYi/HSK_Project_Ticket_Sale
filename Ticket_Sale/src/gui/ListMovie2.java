@@ -42,49 +42,25 @@ import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.ScrollPaneConstants;
 
-public class ListMovie extends JPanel {
+public class ListMovie2 extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private int prevY;
     private boolean isDragging = false;
     private Phim_DAO movieDao = new Phim_DAO();
     ArrayList<Phim> listMovieInDB = movieDao.getAllData();
-    public ListMovie() {
+    public ListMovie2() {
         setLayout(new BorderLayout(0, 0));
 
-        JPanel header = createHeader();
-        add(header, BorderLayout.NORTH);
-
-        JScrollPane scrollPane = createScrollPane();
-        add(scrollPane, BorderLayout.CENTER);
-
-        JPanel listMovie = new JPanel();
-        listMovie.setBackground(new Color(192, 192, 192));
-        listMovie.setLayout(new BoxLayout(listMovie, BoxLayout.Y_AXIS));
-        scrollPane.setViewportView(listMovie);
-        
-        
-        for (Phim phim : listMovieInDB) {
-            JPanel movieDetail = createMovieDetail(phim);
-            listMovie.add(movieDetail);
-        }
-
-        setVisible(true);
-    }
-
-    private JPanel createHeader() {
         JPanel header = new JPanel();
         header.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
 
         JLabel movieDetailTitle = new JLabel("PHIM ĐANG CHIẾU");
         movieDetailTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
         header.add(movieDetailTitle);
+        add(header, BorderLayout.NORTH);
 
-        return header;
-    }
-    
-    private JScrollPane createScrollPane() {
-    	JScrollPane scrollPane = new JScrollPane();
+        JScrollPane scrollPane = new JScrollPane();
     	// Bắt sự kiện kéo chuột trên JScrollPane
         scrollPane.addMouseMotionListener(new MouseAdapter() {
         	 @Override
@@ -109,40 +85,29 @@ public class ListMovie extends JPanel {
                 isDragging = false;
             }
         });
-        return scrollPane;
-    }
+        add(scrollPane, BorderLayout.CENTER);
 
-    private JPanel createMovieDetail(Phim movie) {
-    	// lấy các giá trị từ obj phim
-    	String movieIdValue = movie.getMaPhim();
-    	String movieNameValue = movie.getTenPhim();
-    	String movieImageValue = movie.getAnhPhim()!= null ? movie.getAnhPhim() : "./image/movie-placeholder.jpg";
-    	System.out.println(movieImageValue);
-    	String movieStatusValue = movie.getTrangThai().getDisplayName();
-        double priceValue = movie.getGia();
-        ArrayList<TheLoai> categoryValue = movie.getTheLoai();
-        String ageLimitValue = movie.getGioiHanTuoi().getDisplayName();
+        JPanel listMovie = new JPanel();
+        listMovie.setBackground(new Color(192, 192, 192));
+        listMovie.setLayout(new BoxLayout(listMovie, BoxLayout.Y_AXIS));
+        scrollPane.setViewportView(listMovie);
         
         // xử lý để thêm vào component
         JPanel movieDetail = new JPanel();
+        movieDetail.setAlignmentY(Component.TOP_ALIGNMENT);
         movieDetail.setSize(new Dimension(800, 100));
-        movieDetail.setLayout(new BoxLayout(movieDetail, BoxLayout.X_AXIS));
-        movieDetail.setBorder(createShadowBorder());
+        movieDetail.setLayout(new GridLayout(1, 2, 0, 0));
         
         //  Component ảnh phim
         JPanel movieImage = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) movieImage.getLayout();
-        flowLayout.setVgap(0);
-        flowLayout.setHgap(0);
-        movieImage.setMinimumSize(new Dimension(200, 100));
-        movieImage.setMaximumSize(new Dimension(200, 100));
-        movieImage.setPreferredSize(new Dimension(200, 100));
-        movieImage.setBorder(BorderFactory.createLineBorder(Color.black));
+        movieImage.setSize(new Dimension(100, 100));
         movieDetail.add(movieImage);
+         movieImage.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         // Tạo và thêm hình ảnh vào movieImage
-         ImageJFrame imageJFrame = new ImageJFrame(movieImageValue, (int) movieImage.getPreferredSize().getWidth(),(int) movieImage.getPreferredSize().getHeight());
+         ImageJFrame imageJFrame = new ImageJFrame("./image/nobita.png", (int) movieImage.getSize().getWidth(),(int) movieImage.getSize().getHeight());
          movieImage.add(imageJFrame);
+         imageJFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
          // Component thông tin phim
         JPanel movieInfo = new JPanel();
@@ -151,43 +116,72 @@ public class ListMovie extends JPanel {
         movieDetail.add(movieInfo);
         movieInfo.setLayout(new GridLayout(3, 1, 0, 0));
 
-        JLabel lblNewLabel_1 = new JLabel(movieNameValue);
+        JLabel lblNewLabel_1 = new JLabel("Nabito");
         lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
         lblNewLabel_1.setSize(new Dimension(650, 30));
         lblNewLabel_1.setAlignmentY(Component.TOP_ALIGNMENT);
         lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 17));
         movieInfo.add(lblNewLabel_1);
         
-        String categoryValueDisplay = categoryValue.toString();
+        String categoryValueDisplay = "Hành động";
         if (categoryValueDisplay.toString().startsWith("[") && categoryValueDisplay.toString().endsWith("]")) {
         	categoryValueDisplay = categoryValueDisplay.toString().substring(1, categoryValueDisplay.toString().length() - 1);
         }
         JLabel lblNewLabel_1_1 = new JLabel(categoryValueDisplay);
-        lblNewLabel_1_1.setPreferredSize(new Dimension(650, 30));
-        lblNewLabel_1_1.setMinimumSize(new Dimension(300, 15));
-        lblNewLabel_1_1.setMaximumSize(new Dimension(300, 15));
+        lblNewLabel_1_1.setSize(new Dimension(650, 30));
         lblNewLabel_1_1.setFont(new Font("Tahoma", Font.ITALIC, 17));
         lblNewLabel_1_1.setAlignmentY(0.0f);
         movieInfo.add(lblNewLabel_1_1);
 
-        JLabel lblNewLabel_1_2 = new JLabel("Giới hạn tuổi: " + ageLimitValue);
-        lblNewLabel_1_2.setPreferredSize(new Dimension(650, 30));
-        lblNewLabel_1_2.setMinimumSize(new Dimension(300, 15));
-        lblNewLabel_1_2.setMaximumSize(new Dimension(300, 15));
+        JLabel lblNewLabel_1_2 = new JLabel("Giới hạn tuổi: 18");
+        lblNewLabel_1_2.setSize(new Dimension(650, 30));
         lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
         lblNewLabel_1_2.setAlignmentY(0.0f);
         movieInfo.add(lblNewLabel_1_2);
+        
+        listMovie.add(movieDetail);
+        
+        JPanel movieDetail_1 = new JPanel();
+        movieDetail_1.setSize(new Dimension(800, 100));
+        movieDetail_1.setAlignmentY(0.0f);
+        listMovie.add(movieDetail_1);
+        movieDetail_1.setLayout(new GridLayout(1, 2, 0, 0));
+        
+        JPanel movieImage_1 = new JPanel();
+        movieImage_1.setSize(new Dimension(100, 100));
+        movieDetail_1.add(movieImage_1);
+        movieImage_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        
+        ImageJFrame imageJFrame_1 = new ImageJFrame("./image/nobita.png", 100, 100);
+        movieImage_1.add(imageJFrame_1);
+        imageJFrame_1.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        
+        JPanel movieInfo_1 = new JPanel();
+        movieInfo_1.setAlignmentX(0.0f);
+        movieDetail_1.add(movieInfo_1);
+        movieInfo_1.setLayout(new GridLayout(3, 1, 0, 0));
+        
+        JLabel lblNewLabel_1_3 = new JLabel("Nabito");
+        lblNewLabel_1_3.setSize(new Dimension(650, 30));
+        lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
+        lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_1_3.setAlignmentY(0.0f);
+        movieInfo_1.add(lblNewLabel_1_3);
+        
+        JLabel lblNewLabel_1_1_1 = new JLabel("Hành động");
+        lblNewLabel_1_1_1.setSize(new Dimension(650, 30));
+        lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.ITALIC, 17));
+        lblNewLabel_1_1_1.setAlignmentY(0.0f);
+        movieInfo_1.add(lblNewLabel_1_1_1);
+        
+        JLabel lblNewLabel_1_2_1 = new JLabel("Giới hạn tuổi: 18");
+        lblNewLabel_1_2_1.setSize(new Dimension(650, 30));
+        lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblNewLabel_1_2_1.setAlignmentY(0.0f);
+        movieInfo_1.add(lblNewLabel_1_2_1);
+        setVisible(true);
+    }
 
-        return movieDetail;
-    }
-    
-    public static Border createShadowBorder() {
-        Border emptyBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        Border lineBorder = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
-        Border compoundBorder = BorderFactory.createCompoundBorder(emptyBorder, lineBorder);
-        Border shadowBorder = BorderFactory.createSoftBevelBorder(SoftBevelBorder.RAISED, Color.WHITE, Color.GRAY);
-        return BorderFactory.createCompoundBorder(compoundBorder, shadowBorder);
-    }
     
     public static void main(String[] args) {
     	JFrame frame = new JFrame("List Movie Demo");
@@ -201,7 +195,7 @@ public class ListMovie extends JPanel {
 			e.printStackTrace();
 		}
         // Tạo một instance của ListMovie
-        ListMovie listMovie = new ListMovie();
+        ListMovie2 listMovie = new ListMovie2();
         frame.getContentPane().add(listMovie);
 
 //        frame.pack();

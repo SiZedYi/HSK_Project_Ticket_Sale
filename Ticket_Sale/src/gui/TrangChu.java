@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -16,6 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import connectDB.ConnectDB;
+
+import java.awt.Component;
 
 
 
@@ -26,9 +32,14 @@ import javax.swing.SwingConstants;
 public class TrangChu extends JFrame implements MouseListener, ActionListener {
 	
 	public TrangChu () {
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		initComponents();
 	    setRole();
-
 	}
 
 	public void setRole(){
@@ -90,10 +101,6 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         txt_Header.setPreferredSize(new java.awt.Dimension(320, 100));
         menu_container.add(txt_Header);
        
-        
-        
-       
-        
         //Home
         home_container.setBackground(new Color(253, 245, 244));
         home_container.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
@@ -233,6 +240,7 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         // Test Jframe
         ListMovie listMovie = new ListMovie();
         right_container.add(listMovie);
+//        right_container.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{listMovie}));
         
         GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);
