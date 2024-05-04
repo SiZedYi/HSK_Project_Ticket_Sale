@@ -119,7 +119,9 @@ public abstract class Dao<T> {
 		}
 		return data;
 	}
+	
 
+	
 	
 	public boolean create(T t) {
 		ConnectDB.getInstance();

@@ -15,9 +15,11 @@ public class Phim {
 	private double gia;
 	private ArrayList<TheLoai> theLoai;
 	private GioiHanTuoi gioiHanTuoi;
-	private String hinhAnh;
-	public Phim(String maPhim, String tenPhim, String anhPhim, TrangThaiPhim trangThai, double gia,
-			ArrayList<TheLoai> theLoai, GioiHanTuoi gioiHanTuoi, String hinhAnh) {
+	
+	
+	
+	public Phim(String maPhim, String tenPhim, String anhPhim, TrangThaiPhim trangThai, double gia, ArrayList<TheLoai> theLoai,
+			GioiHanTuoi gioiHanTuoi) {
 		super();
 		this.maPhim = maPhim;
 		this.tenPhim = tenPhim;
@@ -26,7 +28,6 @@ public class Phim {
 		this.gia = gia;
 		this.theLoai = theLoai;
 		this.gioiHanTuoi = gioiHanTuoi;
-		this.hinhAnh = hinhAnh;
 	}
 	public String getMaPhim() {
 		return maPhim;
@@ -70,12 +71,6 @@ public class Phim {
 	public void setGioiHanTuoi(GioiHanTuoi gioiHanTuoi) {
 		this.gioiHanTuoi = gioiHanTuoi;
 	}
-	public String getHinhAnh() {
-		return hinhAnh;
-	}
-	public void setHinhAnh(String hinhAnh) {
-		this.hinhAnh = hinhAnh;
-	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(maPhim);
@@ -93,11 +88,9 @@ public class Phim {
 	}
 	@Override
 	public String toString() {
-		return "Phim [maPhim=" + maPhim + ", tenPhim=" + tenPhim + ", anhPhim=" + anhPhim + ", trangThai=" + trangThai
-				+ ", gia=" + gia + ", theLoai=" + theLoai + ", gioiHanTuoi=" + gioiHanTuoi + ", hinhAnh=" + hinhAnh
-				+ "]";
+		return "Phim [maPhim=" + maPhim + ", tenPhim=" + tenPhim + ", trangThai=" + trangThai + ", gia=" + gia
+				+ ", theLoai=" + theLoai + ", gioiHanTuoi=" + gioiHanTuoi + "]";
 	}
-	
 	
 	
 }
