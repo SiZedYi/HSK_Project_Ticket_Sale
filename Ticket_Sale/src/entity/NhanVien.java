@@ -3,8 +3,6 @@ package entity;
 import java.sql.Date;
 import java.util.Objects;
 
-import enums.ChucVu;
-
 public class NhanVien {
 	private String maNV;
 	private String tenNV;
@@ -16,10 +14,9 @@ public class NhanVien {
 	private String email;
 	private Date ngayTuyenDung;
 	private double luong;
-	private ChucVu chucVu;
 	private NhanVien quanLy;
 	public NhanVien(String maNV, String tenNV, Date ngaySinh, String cccd, String noiCuTru, String sdt, String trinhDo,
-			String email, Date ngayTuyenDung, double luong, ChucVu chucVu, NhanVien quanLy) {
+			String email, Date ngayTuyenDung, double luong, NhanVien quanLy) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -31,7 +28,6 @@ public class NhanVien {
 		this.email = email;
 		this.ngayTuyenDung = ngayTuyenDung;
 		this.luong = luong;
-		this.chucVu = chucVu;
 		this.quanLy = quanLy;
 	}
 	public String getMaNV() {
@@ -94,12 +90,6 @@ public class NhanVien {
 	public void setLuong(double luong) {
 		this.luong = luong;
 	}
-	public ChucVu getChucVu() {
-		return chucVu;
-	}
-	public void setChucVu(ChucVu chucVu) {
-		this.chucVu = chucVu;
-	}
 	public NhanVien getQuanLy() {
 		return quanLy;
 	}
@@ -125,7 +115,7 @@ public class NhanVien {
 	public String toString() {
 		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", ngaySinh=" + ngaySinh + ", cccd=" + cccd
 				+ ", noiCuTru=" + noiCuTru + ", sdt=" + sdt + ", trinhDo=" + trinhDo + ", email=" + email
-				+ ", ngayTuyenDung=" + ngayTuyenDung + ", luong=" + luong + ", chucVu=" + chucVu + ", quanLy=" + quanLy
+				+ ", ngayTuyenDung=" + ngayTuyenDung + ", luong=" + luong + ", quanLy=" + quanLy
 				+ "]";
 	}
 	
