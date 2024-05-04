@@ -7,7 +7,7 @@ public enum PhuongThucThanhToan {
 	VNPAY("VNPAY"),
 	ZALOPAY("Zalo Pay"),
 	BANKTRANSFER("Chuyển khoản qua ngân hàng");
-
+	
 	
 
 	private final String displayname;
@@ -19,6 +19,23 @@ public enum PhuongThucThanhToan {
 	@Override
 	public String toString() {
 		return displayname;
+	}
+	
+	public static PhuongThucThanhToan StringToPhuongThucThanhToan(String ptttString) {
+		if(ptttString.equals(CASH.toString()))
+			return CASH;
+		if(ptttString.equals(MOMO.toString()))
+			return MOMO;
+		if(ptttString.equals(ATM.toString()))
+			return ATM;
+		if(ptttString.equals(VNPAY.toString()))
+			return VNPAY;
+		if(ptttString.equals(ZALOPAY.toString()))
+			return ZALOPAY;
+		if(ptttString.equals(BANKTRANSFER.toString()))
+			return BANKTRANSFER;
+		System.out.println(ptttString);
+		return null;
 	}
 
 }

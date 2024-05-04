@@ -1,4 +1,4 @@
-use master
+﻿use master
 
 drop database CinemaDatabase
 
@@ -7,83 +7,83 @@ create database CinemaDatabase
 use CinemaDatabase
 
 create table TaiKhoan(
-	maTK varchar(20) primary key,
-	tenDangNhap varchar(50),
-	matKhau varchar(50),
-	nhanVien varchar(20),
-	quyen varchar(20),
+	maTK nvarchar(20) primary key,
+	tenDangNhap nvarchar(50),
+	matKhau nvarchar(50),
+	nhanVien nvarchar(20),
+	quyen nvarchar(20),
 )
 
 create table NhanVien(
-	maNV varchar(20) primary key,
-	tenNV varchar(50),
+	maNV nvarchar(20) primary key,
+	tenNV nvarchar(50),
 	ngaySinh Date,
-	cccd varchar(20),
-	noiCuTru varchar(50),
-	sdt varchar(20),
-	trinhDo varchar(20),
-	email varchar(50),
+	cccd nvarchar(20),
+	noiCuTru nvarchar(50),
+	sdt nvarchar(20),
+	trinhDo nvarchar(20),
+	email nvarchar(50),
 	ngayTuyenDung Date,
 	luong decimal(10,2),
-	chucVu varchar(20),
-	quanLy varchar(20),
+	quanLy nvarchar(20),
 )
 
 create table Rap(
-	maRap varchar(20) primary key,
-	tenRap varchar(50),
-	diaChi varchar(50),
-	sdtRap varchar(20)
+	maRap nvarchar(20) primary key,
+	tenRap nvarchar(50),
+	diaChi nvarchar(50),
+	sdtRap nvarchar(20)
 )
 
 create table PhongChieu(
-	maPC varchar(20) primary key,
-	tenPC varchar(50),
-	loaiPC varchar(20),
-	rap varchar(20)
+	maPC nvarchar(20) primary key,
+	tenPC nvarchar(50),
+	loaiPC nvarchar(20),
+	rap nvarchar(20)
 )
 
 create table Phim(
-	maPhim varchar(20) primary key,
-	tenPhim varchar(50),
-	trangThai varchar(20),
+	maPhim nvarchar(20) primary key,
+	tenPhim nvarchar(50),
+	trangThai nvarchar(20),
 	gia decimal(10,2),
-	theLoai varchar(50),
-	gioiHanTuoi varchar(20)
+	theLoai nvarchar(50),
+	gioiHanTuoi nvarchar(20),
+	hinhAnh nvarchar(50)
 )
 
 create table Ghe(
-	maGhe varchar(20) primary key,
-	loaiGhe varchar(20),
+	maGhe nvarchar(20) primary key,
+	loaiGhe nvarchar(20),
 	giaGhe decimal(20),
 	coTheDat bit,
-	phongChieu varchar(20)
+	phongChieu nvarchar(20)
 )
 
 create table SuatChieu(
-	maSC varchar(20) primary key,
+	maSC nvarchar(20) primary key,
 	thoiGianBatDau DateTime,
 	thoiGianKetThuc DateTime,
-	phim varchar(20),
-	phongChieu varchar(20)
+	phim nvarchar(20),
+	phongChieu nvarchar(20)
 )
 
 
 create table Ve(
-	maVe varchar(20) primary key,
+	maVe nvarchar(20) primary key,
 	thoiGianIn DateTime,
-	phim varchar(20),
-	suatChieu varchar(20),
-	ghe varchar(20),
-	phongChieu varchar(20),
-	hoaDon varchar(20)
+	phim nvarchar(20),
+	suatChieu nvarchar(20),
+	ghe nvarchar(20),
+	phongChieu nvarchar(20),
+	hoaDon nvarchar(20)
 )
 
 create table HoaDon(
-	maHD varchar(20) primary key,
+	maHD nvarchar(20) primary key,
 	soTien decimal(10,2),
 	thoiGianXuat DateTime,
-	phuongThucThanhToan varchar(20),
+	phuongThucThanhToan nvarchar(20),
 )
 
 alter table TaiKhoan
@@ -129,3 +129,15 @@ foreign key (phongChieu) references PhongChieu(maPC)
 alter table Ve
 add constraint fk_hoaDon_Ve
 foreign key (hoaDon) references HoaDon(maHD)
+
+INSERT INTO HoaDon (maHD, soTien, thoiGianXuat, phuongThucThanhToan)
+VALUES
+    ('HD001', 100.50, '2024-05-04 10:30:00', 'MOMO'),
+    ('HD002', 75.20, '2024-05-04 11:15:00', 'VNPAY'),
+    ('HD003', 120.80, '2024-05-04 12:00:00', 'Zalo Pay'),
+    ('HD004', 50.00, '2024-05-04 13:45:00', 'VNPAY'),
+    ('HD005', 89.75, '2024-05-04 14:30:00', 'MOMO'),
+    ('HD006', 65.30, '2024-05-04 15:20:00', 'Tiền mặt'),
+    ('HD007', 150.00, '2024-05-04 16:10:00', 'Thẻ ngân hàng'),
+    ('HD009', 78.90, '2024-05-04 18:30:00', 'MOMO'),
+    ('HD010', 95.40, '2024-05-04 19:15:00', 'MOMO');
