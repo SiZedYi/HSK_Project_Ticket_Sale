@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import dao.NhanVien_Dao;
 import dao.Phim_Dao;
+import dao.TaiKhoan_Dao;
 import entity.NhanVien;
 import enums.GioiTinh;
 
@@ -23,10 +24,13 @@ public class ChuongTrinh {
 			e.printStackTrace();
 		}
         
-        //All Dao
+        //Start all Dao here
         Phim_Dao phimDao = new Phim_Dao();
+        NhanVien_Dao nhanVienDao = new NhanVien_Dao();
+        TaiKhoan_Dao taiKhoanDao = new TaiKhoan_Dao();
+        
     	//////////////
-        new TrangChu();
+        new Login();
 
     }
 }

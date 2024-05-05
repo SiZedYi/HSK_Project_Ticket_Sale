@@ -221,3 +221,4 @@ VALUES
 Select * from Phim where gia = 100000
 
 select * from Phim
+

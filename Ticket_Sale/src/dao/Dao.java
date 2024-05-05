@@ -17,8 +17,8 @@ public abstract class Dao<T> {
 	}
 	
 	public abstract T readRow(ResultSet	rs);
-	public abstract void insertingStatement(PreparedStatement stmt, T t);
-	public abstract void updatingStatement(PreparedStatement stmt, T t);
+	public abstract void insertingStatement(PreparedStatement stmt, T t,  Connection con);
+	public abstract void updatingStatement(PreparedStatement stmt, T t,  Connection con);
 	
 	public ArrayList<T> getAllData(){
 		
@@ -128,18 +128,13 @@ public abstract class Dao<T> {
 		
 		int n = 0;
 		try {
-			insertingStatement(stmt, t);
+			insertingStatement(stmt, t, ConnectDB.getInstance().getConnection());
+			
 			n = stmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				stmt.close();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		
 		return n > 0;
 	}
 	
@@ -150,7 +145,7 @@ public abstract class Dao<T> {
 		
 		int n = 0;
 		try {
-			updatingStatement(stmt, t);
+			updatingStatement(stmt, t, con);
 			n = stmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

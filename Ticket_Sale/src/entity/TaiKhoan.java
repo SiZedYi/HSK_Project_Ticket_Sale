@@ -11,7 +11,10 @@ public class TaiKhoan {
 	private NhanVien nhanVien;
 	private Quyen quyen;
 	
-	
+	public TaiKhoan(String maTK) {
+		super();
+		this.maTK = maTK;
+	}
 	
 	public TaiKhoan(String maTK, String tenDangNhap, String matKhau, NhanVien nhanVien, Quyen quyen) {
 		super();

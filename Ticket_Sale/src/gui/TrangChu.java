@@ -1,334 +1,248 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import connectDB.ConnectDB;
-import dao.Phim_Dao;
+public class TrangChu extends JFrame implements ActionListener, MouseListener {
+	private JLabel lbl_ve,
+					lbl_nv,
+					lbl_thongke,
+					lbl_thongTinCaNhan,
+					img_logo,
+					lbl_home,
+					lbl_phim,
+					lbl_DangXuat;
+					
+	private JPanel  right_container,
+					left_container,
+					home_container,
+					phim_container, 
+					thongke_container,
+					thongTinCaNhan_container,
+					ve_container,
+					DangXuat_container, 
+					left_menu,
+					logo_container,nv_container;
 
 
 
-
-
-//import GUI.QuanLyNhanVien;
-
-public class TrangChu extends JFrame implements MouseListener, ActionListener {
-	
-	public TrangChu () {
+	public TrangChu(){
+		
 		initComponents();
-	    setRole();
-
+		setRole();
+			
 	}
-
+	
 	public void setRole(){
         
     }
-	 
-	 
-	 private static void addPanel(JPanel pnForm){
-		 
-	 }
 	
-	// giao diện
-	 private void initComponents() {
-		JPanel container = new JPanel();
-        JPanel left_container = new JPanel();
-        JPanel menu_container = new JPanel();
-        
-        JLabel lbl_Menu = new JLabel();
-        JPanel header_container = new JPanel();
-        JLabel txt_Header = new JLabel();
-        
-        JPanel phim_container = new JPanel();
-        JLabel lbl_phim = new JLabel();
-        
-        JPanel home_container = new JPanel();
-        JLabel lbl_home = new JLabel();
-        
-        JPanel ve_container = new JPanel();
-        JLabel lbl_ve = new JLabel();
-        
-        JPanel thongke_container = new JPanel();
-        JLabel lbl_thongke = new JLabel();
-        
-        JPanel nhanVien_container = new JPanel();
-        JLabel lbl_nhanVien = new JLabel();
-        
-        JPanel DangXuat_container = new JPanel();
-        JLabel lbl_DangXuat = new JLabel();
-        JPanel right_container = new JPanel();
-       
-        
-        
-        setTitle("Nhóm 3 con báo");
-		setSize(1383, 780);
+
+	private void initComponents() {
+		setTitle("Nhóm 3 con báo");
+		setSize(1200, 780);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        
-        
+		
+		
+		//left
+        left_container = new JPanel();
         left_container.setBackground(new Color(253, 245, 244));
-        left_container.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 0, new Color(0, 0, 0)));
-        left_container.setMaximumSize(new java.awt.Dimension(230, 768));
-        left_container.setMinimumSize(new java.awt.Dimension(230, 768));
-
-
-        menu_container.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(255, 255, 255)));
-
-       // logo
-        ImageIcon icon = new ImageIcon("src/icon/logo.jpg");
-        txt_Header.setIcon(icon);
+        left_container.setPreferredSize(new Dimension(200,780));
         
         
-        txt_Header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_Header.setAlignmentY(0.0F);
-        txt_Header.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        txt_Header.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        txt_Header.setMaximumSize(new java.awt.Dimension(320, 100));
-        txt_Header.setMinimumSize(new java.awt.Dimension(320, 100));
-        txt_Header.setPreferredSize(new java.awt.Dimension(320, 100));
-        menu_container.add(txt_Header);
+        //logo
+        logo_container= new JPanel();
+        ImageIcon icon = new ImageIcon("data/icon/logo.jpg");// 
+		Image image = icon.getImage();//Lấy hình ảnh từ ImageIcon
+		Image resizedImage = image.getScaledInstance(200, 90, Image.SCALE_SMOOTH);
+		ImageIcon resizedIcon = new ImageIcon(resizedImage);
+		img_logo = new JLabel(resizedIcon);
+		logo_container.add(img_logo);
+		
+		left_container.add(logo_container,BorderLayout.NORTH);
+		
+        //home
+        home_container = new JPanel();
+        home_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        home_container.setPreferredSize(new Dimension(200,50));
        
         
-        
-       
-        
-        //Home
-        home_container.setBackground(new Color(253, 245, 244));
-        home_container.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
-        home_container.setAlignmentX(0.0F);
-        home_container.setMaximumSize(new Dimension(204, 60));
-        
-        lbl_home.setFont(new java.awt.Font("Segoe UI", 0, 24));
-        lbl_home.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_home.setText("TRANG CHỦ");
-        lbl_home.setForeground(Color.BLACK);
-        lbl_home.setAlignmentY(0.0F);
+        lbl_home = new JLabel("HOME");
+        lbl_home.setFont(new Font("Segoe UI", 0, 20));
+        lbl_home.setForeground(Color.RED);
         lbl_home.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_home.setMaximumSize(new Dimension(236, 60));
-        lbl_home.setPreferredSize(new Dimension(236, 45));
+        
         home_container.add(lbl_home);
         
-        
-        
         //phim
-        phim_container.setBackground(new Color(253, 245, 244));
-        phim_container.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
-        phim_container.setAlignmentX(0.0F);
-        phim_container.setMaximumSize(new Dimension(204, 60));
+        phim_container = new JPanel();
+        phim_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        phim_container.setPreferredSize(new Dimension(200,50));
 
-        lbl_phim.setFont(new java.awt.Font("Segoe UI", 0, 24));
-        lbl_phim.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_phim.setText("PHIM");
-        lbl_phim.setForeground(Color.BLACK);
-        lbl_phim.setAlignmentY(0.0F);
+        lbl_phim = new JLabel("PHIM");
+        lbl_phim.setFont(new Font("Segoe UI", 0, 20));
+        lbl_phim.setForeground(Color.RED);
         lbl_phim.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_phim.setMaximumSize(new Dimension(236, 60));
-        lbl_phim.setPreferredSize(new Dimension(236, 45));
-        //thêm sự kiện 
+        
         phim_container.add(lbl_phim);
         
         
-     // vé
-        ve_container.setBackground(new Color(253, 245, 244));
-        ve_container.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-        ve_container.setAlignmentX(0.0F);
-        ve_container.setMaximumSize(new Dimension(204, 60));
+        //Vé
+        ve_container = new JPanel();
+        ve_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        ve_container.setPreferredSize(new Dimension(200,50));
 
-        lbl_ve.setFont(new java.awt.Font("Segoe UI", 0, 24));
-        lbl_ve.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_ve.setText("VÉ");
-        lbl_ve.setForeground(Color.BLACK);
-        lbl_ve.setAlignmentY(0.0F);
+        
+        lbl_ve = new JLabel("VÉ");
+        lbl_ve.setFont(new Font("Segoe UI", 0, 20));
+        lbl_ve.setForeground(Color.RED);
         lbl_ve.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_ve.setMaximumSize(new Dimension(236, 60));
-        lbl_ve.setPreferredSize(new Dimension(236, 45));
-        //thêm sự kiện 
+        
         ve_container.add(lbl_ve);
         
-        
-      //thông kê
-        thongke_container.setBackground(new Color(253, 245, 244));
-        thongke_container.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-        thongke_container.setAlignmentX(0.0F);
-        thongke_container.setMaximumSize(new Dimension(204, 60));
+      //Nhân viên 
+        nv_container = new JPanel();
+        nv_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        nv_container.setPreferredSize(new Dimension(200,50));
 
-        lbl_thongke.setFont(new java.awt.Font("Segoe UI", 0, 24));
-        lbl_thongke.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_thongke.setText("THỐNG KÊ");
-        lbl_thongke.setForeground(Color.BLACK);
-        lbl_thongke.setAlignmentY(0.0F);
+        
+        lbl_nv = new JLabel("NHÂN VIÊN");
+        lbl_nv.setFont(new Font("Segoe UI", 0, 20));
+        lbl_nv.setForeground(Color.RED);
+        lbl_nv.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        nv_container.add(lbl_nv);
+        
+        //thongke
+        thongke_container = new JPanel();
+        thongke_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        thongke_container.setPreferredSize(new Dimension(200,50));
+
+        
+        lbl_thongke = new JLabel("THỐNG KÊ");
+        lbl_thongke.setFont(new Font("Segoe UI", 0, 20));
+        lbl_thongke.setForeground(Color.RED);
         lbl_thongke.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_thongke.setMaximumSize(new Dimension(236, 60));
-        lbl_thongke.setPreferredSize(new Dimension(236, 45));
-        //thêm sự kiện 
+        
         thongke_container.add(lbl_thongke);
-     
-      //Nhân Viên
-        nhanVien_container.setBackground(new Color(253, 245, 244));
-        nhanVien_container.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-        nhanVien_container.setAlignmentX(0.0F);
-        nhanVien_container.setMaximumSize(new Dimension(204, 60));
+        
+      //thongke
+        thongTinCaNhan_container = new JPanel();
+        thongTinCaNhan_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        thongTinCaNhan_container.setPreferredSize(new Dimension(200,50));
 
-        lbl_nhanVien.setFont(new java.awt.Font("Segoe UI", 0, 24));
-        lbl_nhanVien.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_nhanVien.setText("NHÂN VIÊN");
-        lbl_nhanVien.setForeground(Color.BLACK);
-        lbl_nhanVien.setAlignmentY(0.0F);
-        lbl_nhanVien.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_nhanVien.setMaximumSize(new Dimension(236, 60));
-        lbl_nhanVien.setPreferredSize(new Dimension(236, 45));
-        //thêm sự kiện 
-        nhanVien_container.add(lbl_nhanVien);
+        
+        lbl_thongTinCaNhan = new JLabel("THÔNG TIN CÁ NHÂN");
+        lbl_thongTinCaNhan.setFont(new Font("Segoe UI", 0, 20));
+        lbl_thongTinCaNhan.setForeground(Color.RED);
+        lbl_thongTinCaNhan.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        thongTinCaNhan_container.add(lbl_thongTinCaNhan);
+        
+        //head
+        left_menu = new JPanel();
+        left_menu.setLayout(new BoxLayout(left_menu, BoxLayout.Y_AXIS));
+        
+        left_menu.add(home_container);
+        left_menu.add(phim_container);
+        left_menu.add(ve_container);
+        left_menu.add(nv_container);
+        left_menu.add(thongke_container);
+        left_menu.add(thongTinCaNhan_container);
+        left_container.add(left_menu,BorderLayout.CENTER);
         
         
-     // Button đăng xuất
-        DangXuat_container.setBackground(new Color(253, 245, 244));
-        DangXuat_container.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(255, 255, 255)));
-        DangXuat_container.setAlignmentX(0.0F);
-        DangXuat_container.setMaximumSize(new Dimension(204, 60));
+      
+
         
-        lbl_DangXuat.setFont(new Font("Segoe UI", 0, 24)); 
-        lbl_DangXuat.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl_DangXuat.setText("ĐĂNG XUÂT");
+        //ĐĂNG XUẤT 
+        DangXuat_container = new JPanel();
+        DangXuat_container.setBorder( BorderFactory.createMatteBorder(1, 0, 0,0 ,Color.BLACK));
+        DangXuat_container.setPreferredSize(new Dimension(200,50));
+        
+        lbl_DangXuat = new JLabel("ĐĂNG XUẤT");
+        lbl_DangXuat.setFont(new Font("Segoe UI", 0, 20));
         lbl_DangXuat.setForeground(Color.RED);
-        lbl_DangXuat.setAlignmentY(0.0F);
         lbl_DangXuat.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lbl_DangXuat.setMaximumSize(new Dimension(236, 60));
-        lbl_DangXuat.setPreferredSize(new Dimension(236, 45));
-        // thêm sự kiện 
-        
         DangXuat_container.add(lbl_DangXuat);
+       
+        
+       left_container.add(DangXuat_container,BorderLayout.SOUTH);
         
         
         
-     // layout
-        GroupLayout left_containerLayout = new GroupLayout(left_container);
-        left_container.setLayout(left_containerLayout);
-        left_containerLayout.setHorizontalGroup(
-            left_containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(menu_container, GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-            .addComponent(home_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(phim_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(thongke_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(nhanVien_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(header_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(ve_container, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(DangXuat_container, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        left_containerLayout.setVerticalGroup(
-            left_containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(left_containerLayout.createSequentialGroup()
-                .addComponent(header_container, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menu_container, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(home_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(phim_container, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(ve_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(thongke_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(nhanVien_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(DangXuat_container, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        right_container.setBackground(new java.awt.Color(255, 255, 255));
-        right_container.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
-        right_container.setAlignmentY(0.0F);
-        right_container.setMaximumSize(new Dimension(1130, 768));//kích thước pannel con 
-        right_container.setMinimumSize(new Dimension(1130, 768));
-        right_container.setPreferredSize(new Dimension(1130, 768));
-        right_container.setLayout(new javax.swing.BoxLayout(right_container, javax.swing.BoxLayout.PAGE_AXIS));
-
-     // Test Jframe
-        ListMovie listMovie = new ListMovie();
-        right_container.add(listMovie);
-        GroupLayout containerLayout = new GroupLayout(container);
-        container.setLayout(containerLayout);
-        containerLayout.setHorizontalGroup(
-            containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(containerLayout.createSequentialGroup()
-                .addComponent(left_container, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(right_container, GroupLayout.PREFERRED_SIZE, 1124, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        containerLayout.setVerticalGroup(
-            containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(left_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(right_container, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-        );
-
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(container, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         
-		 
-	 }
-	 
-	 public static void main(String args[]) {
-		//ConnectDB
-			ConnectDB dbConnection = new ConnectDB();
-	        try {
-				dbConnection.connect();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-	        
-	        //All Dao
-	        Phim_Dao phimDao = new Phim_Dao();
-	    	//////////////
-		 try {
-				ConnectDB.getInstance().connect();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        new TrangChu().setVisible(true);
-	  }
+        add(left_container,BorderLayout.WEST);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //right
+        right_container = new JPanel();
+        right_container.setPreferredSize(new Dimension(980,780));
+        
+        right_container.setBorder( BorderFactory.createMatteBorder(1, 1, 1,1 ,Color.BLACK));
+        
+      
+//        addPanel(right_container);
+
+       
+       
+        
+        
+        add(right_container,BorderLayout.EAST);
+        
+        
+       
+        pack();
+        setVisible(true);
+        
+        lbl_ve.addMouseListener(this);
+		
+		
+		
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		
+		
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		 if (e.getSource().equals(lbl_ve)) {
+			 swapPage(TrangQuanLyTaiKhoan.class);
+	        }
 		
 	}
 
@@ -355,5 +269,27 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void swapPage(Class<?> targetClass) {
+	    if (targetClass == null) {
+	        return; // Do nothing if the targetClass is null
+	    }
+
+	    try {
+	        right_container.setVisible(true); // Hiển thị right_container
+	        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+	        
+	        // Tạo một instance của lớp targetClass và thêm vào right_container
+	        Object instance = targetClass.getDeclaredConstructor().newInstance();
+	        right_container.add((Component) instance); // Chỉ thêm nếu targetClass là một loại Component
+
+	        right_container.revalidate(); // Cập nhật giao diện
+	        right_container.repaint();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+
 
 }

@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -30,10 +31,14 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import dao.NhanVien_Dao;
-import entity.NhanVien;
+import dao.TaiKhoan_Dao;
+import entity.TaiKhoan;
+
+//import dao.NhanVien_DAO;
+//import entity.NhanVien;
 
 public class Login extends JFrame implements ActionListener, MouseListener {
+		private JTextField txt_username;
 	    private JPasswordField txt_password;
 	    private JLabel lbl_hiddenicon;
 		private JButton btnLogin;
@@ -68,9 +73,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		JPanel pleft = new JPanel();
 		pleft.setBackground(new Color(212,66,51));
 		
-		//right
-		JPanel pright = new JPanel();
-		JPanel pLogin = new JPanel();
+		
 
 		//banner
 		ImageIcon icon = new ImageIcon("data/Image/login2.jpg");// 
@@ -82,7 +85,10 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         add(pleft,BorderLayout.WEST);
         
        
-        
+        //right
+  		JPanel pright = new JPanel();
+  		JPanel pLogin = new JPanel();
+      		
         //login
         pright.setBackground(new Color(212,66,51));
         pright.setBorder(new EmptyBorder(20,0,0,0));
@@ -117,9 +123,9 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         lbl_username.setPreferredSize(new Dimension(0, 30));
         JPanel ptxtn = new JPanel();
         ptxtn.setLayout(new BoxLayout(ptxtn, BoxLayout.X_AXIS));
-        JTextField txt_username =  new JTextField(30);
+        txt_username =  new JTextField(30);
         txt_username.setBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5));
-        JLabel lbl_usericon= new JLabel(new ImageIcon("src/icon/userLogin.png"));
+        JLabel lbl_usericon= new JLabel(new ImageIcon("data/icon/userLogin.png"));
         
         ptxtn.add(txt_username);
         ptxtn.add(lbl_usericon);
@@ -144,7 +150,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         txt_password.setEchoChar('*');
         txt_password.setBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5));
         
-        lbl_hiddenicon= new JLabel(new ImageIcon("src/icon/hide-password.png"));
+        lbl_hiddenicon= new JLabel(new ImageIcon("data/icon/hide-password.png"));
         lbl_hiddenicon.setCursor(new Cursor(Cursor.HAND_CURSOR));
        
         ptxtpw.add(txt_password);
@@ -248,31 +254,41 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		Object o = e.getSource();
 		if (o.equals(btnLogin)) {
 			
-//			Connection conn = KetNoiSQL.getConnection();
-//		       try{
-//		       String sql="SELECT * FROM TaiKhoan WHERE tenTaiKhoan=? AND matKhau=? and (isDeleted is null or isDeleted = 0)";
-//		       PreparedStatement stmt= conn.prepareCall(sql);
-//		       stmt.setString(1, txt_TaiKhoan.getText());
-//		       stmt.setString(2, String.valueOf(pwd_MatKhau.getPassword()));
-//		       ResultSet rs= stmt.executeQuery();
-//		       if(rs.next()){
-//		           JOptionPane.showMessageDialog(null,"Đăng nhập thành công");
-//		           nhanVien = nv_DAO.getNhanVienByID(rs.getString(4));
-//		           this.setVisible(false);
-//		           new TrangChu().setVisible(true);
-//		       }else{
-//		           JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng");
-//		           pwd_MatKhau.setText("");
-//		       }
-//		       }catch(Exception ex){
-//		       JOptionPane.showMessageDialog(null, ex);
-//		       }
-			
-			new TrangChu();
-			dispose();
+			if(checkAccount(txt_username.getText(),String.valueOf(txt_password.getPassword()))){
+				new TrangChu();
+				dispose();
+			}
 		}
 		
 		
+	}
+	
+	public boolean checkAccount(String tk, String mk) {
+		//Kiểm tra rỗng
+		if(tk.equals("")) {
+			JOptionPane.showMessageDialog(null,"Chưa nhập tài khoản");
+			return true;
+		}
+		if(mk.equals("")) {
+			JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống");
+			return false;
+		}
+		
+		//Xác thực
+		ArrayList<TaiKhoan> taiKhoan = TaiKhoan_Dao.getInstance().getByAttribute("tenDangNhap", tk);
+		if(taiKhoan.size() == 0) {
+			JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại");
+			return false;
+		}
+		else if(taiKhoan.size() == 1) {
+			if(taiKhoan.getFirst().getMatKhau().equals(mk)) {
+				return true;
+			}
+			JOptionPane.showMessageDialog(null, "Sai mật khẩu");
+			return false;
+		}
+		JOptionPane.showMessageDialog(null,"Đăng nhập không thành công");
+		return false;
 	}
 
 

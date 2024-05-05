@@ -56,7 +56,6 @@ public class TrangThongTinCaNhan extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Add labels and text fields to the panel
         addLabelAndField(maNVLabel, maNVField, gbc);
         addLabelAndField(tenNVLabel, tenNVField, gbc);
         addLabelAndField(gioiTinhLabel, gioiTinhField, gbc);
@@ -80,7 +79,6 @@ public class TrangThongTinCaNhan extends JPanel {
     }
 
     private void displayNhanVienInfo() {
-        // Set text fields with NhanVien's information
         maNVField.setText(nhanVien.getMaNV());
         tenNVField.setText(nhanVien.getTenNV());
         gioiTinhField.setText(nhanVien.getGioiTinh().toString());

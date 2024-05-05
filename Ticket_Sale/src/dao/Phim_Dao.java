@@ -1,6 +1,7 @@
 package dao;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,16 +47,19 @@ public class Phim_Dao extends Dao{
 	    return null;
 	}
 
+
 	@Override
-	public void insertingStatement(PreparedStatement stmt, Object t) {
+	public void insertingStatement(PreparedStatement stmt, Object t, Connection con) {
 		// TODO Auto-generated method stub
 		
 	}
 
+
 	@Override
-	public void updatingStatement(PreparedStatement stmt, Object t) {
+	public void updatingStatement(PreparedStatement stmt, Object t, Connection con) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }
