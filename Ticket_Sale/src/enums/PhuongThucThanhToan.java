@@ -21,7 +21,7 @@ public enum PhuongThucThanhToan {
 		return displayname;
 	}
 	
-	public static PhuongThucThanhToan StringToPhuongThucThanhToan(String ptttString) {
+	public static PhuongThucThanhToan stringToPhuongThucThanhToan(String ptttString) {
 		if(ptttString.equals(CASH.toString()))
 			return CASH;
 		if(ptttString.equals(MOMO.toString()))

@@ -21,6 +21,7 @@ public abstract class Dao<T> {
 	public abstract void updatingStatement(PreparedStatement stmt, T t);
 	
 	public ArrayList<T> getAllData(){
+		
 		ArrayList<T> data = new ArrayList<T>();
 		try {
 			ConnectDB.getInstance();
@@ -28,7 +29,6 @@ public abstract class Dao<T> {
 			String getAllQuery = "Select * from " + tableName;
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(getAllQuery);
-			
 			while(rs.next()) {
 				data.add(readRow(rs));
 			}
@@ -45,10 +45,10 @@ public abstract class Dao<T> {
 		PreparedStatement statement = null;
 		
 		try {
-			String query = "Select * from " + tableName + " where " + attribute + " = ?";
+			String query = "Select * from " + tableName + " where " + attribute + " = \'" + filterValue + "\'";
+			
 			statement=con.prepareStatement(query);
-			statement.setString(1, filterValue);
-			ResultSet rs = statement.executeQuery(query);
+			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
 				data.add(readRow(rs));

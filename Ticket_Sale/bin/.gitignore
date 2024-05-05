@@ -1,6 +1,5 @@
-/dao/
-/app/
 /gui/
-/entity/
+/tables/
 /enums/
-/connectDB/
+/entity/
+/dao/

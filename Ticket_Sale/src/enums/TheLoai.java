@@ -1,5 +1,7 @@
 package enums;
 
+import java.util.ArrayList;
+
 public enum TheLoai {
   	HANH_DONG("Hành động"), 
 	TINH_CAM("Tình cảm"),
@@ -21,5 +23,23 @@ public enum TheLoai {
 		return displayname;
 	}
 
-
+	public static TheLoai stringToTheLoai(String theLoaiString) {
+	    for (TheLoai theLoai : TheLoai.values()) {
+	        if (theLoai.toString().equals(theLoaiString)) {
+	            return theLoai;
+	        }
+	    }
+	    System.out.println(theLoaiString);
+	    return null; 
+	}
+	
+	public static ArrayList<TheLoai> splitTheLoaiString(String theLoaiString) {
+	    ArrayList<TheLoai> theLoaiList = new ArrayList<>();
+	    String[] theLoaiArray = theLoaiString.split("\\|"); 
+	    for (String theLoai : theLoaiArray) {
+	
+	        theLoaiList.add(stringToTheLoai(theLoai));
+	    }
+	    return theLoaiList;
+	}
 }

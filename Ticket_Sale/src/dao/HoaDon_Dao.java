@@ -9,10 +9,16 @@ import entity.HoaDon;
 import enums.PhuongThucThanhToan;
 
 public class HoaDon_Dao extends Dao{
-
+	
+	private static HoaDon_Dao instance;
+	
+	public static HoaDon_Dao getInstance() {
+		return instance;
+	}
 	public HoaDon_Dao() {
 		super("HoaDon");
 		// TODO Auto-generated constructor stub
+		instance = this;
 	}
 
 	@Override
@@ -21,7 +27,7 @@ public class HoaDon_Dao extends Dao{
 			String maHD = rs.getString(1);
 			double soTien = rs.getDouble(2);
 			Time thoiGianXuat = rs.getTime(3);
-			PhuongThucThanhToan pttt = PhuongThucThanhToan.StringToPhuongThucThanhToan(rs.getString(4));
+			PhuongThucThanhToan pttt = PhuongThucThanhToan.stringToPhuongThucThanhToan(rs.getString(4));
 			HoaDon hoaDonDaDoc = new HoaDon(maHD, soTien, thoiGianXuat, pttt);
 			return hoaDonDaDoc;
 			

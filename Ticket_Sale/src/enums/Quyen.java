@@ -13,5 +13,13 @@ public enum Quyen {
 	public String toString() {
 		return displayname ;
 	}
-
+	public static Quyen stringToQuyen(String quyenString) {
+	    for (Quyen quyen : Quyen.values()) {
+	        if (quyen.toString().equals(quyenString)) {
+	            return quyen;
+	        }
+	    }
+	    System.out.println(quyenString);
+	    return null; 
+	}
 }

@@ -14,5 +14,13 @@ public enum LoaiPhongChieu {
 	public String toString() {
 		return displayname;
 	}
-
+	public static LoaiPhongChieu stringToLoaiPhongChieu(String lpcString) {
+	    for (LoaiPhongChieu lpc : LoaiPhongChieu.values()) {
+	        if (lpc.toString().equals(lpcString)) {
+	            return lpc;
+	        }
+	    }
+	    System.out.println(lpcString);
+	    return null; 
+	}
 }

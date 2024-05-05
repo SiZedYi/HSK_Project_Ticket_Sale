@@ -1,4 +1,4 @@
-package gui;
+package tables;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class BangHoaDon extends JTable{
 		
 	}
 	
-	public void CapNhatDuLieu(ArrayList<HoaDon> dsHoaDon) {
+	public void capNhatDuLieu(ArrayList<HoaDon> dsHoaDon) {
 		model.setRowCount(0);
 		for(HoaDon hoaDon : dsHoaDon) {
 			model.addRow(new Object[] {

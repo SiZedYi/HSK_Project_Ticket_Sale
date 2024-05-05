@@ -13,6 +13,15 @@ public enum TrangThaiPhim {
 	public String toString() {
 		return displayname;
 	}
-
+	
+	public static TrangThaiPhim stringToTrangThaiPhim(String trangThaiString) {
+	    for (TrangThaiPhim trangThai : TrangThaiPhim.values()) {
+	        if (trangThai.toString().equals(trangThaiString)) {
+	            return trangThai;
+	        }
+	    }
+	    System.out.println(trangThaiString);
+	    return null; 
+	}
 
 }

@@ -3,9 +3,12 @@ package entity;
 import java.sql.Date;
 import java.util.Objects;
 
+import enums.GioiTinh;
+
 public class NhanVien {
 	private String maNV;
 	private String tenNV;
+	private GioiTinh gioiTinh;
 	private Date ngaySinh;
 	private String cccd;
 	private String noiCuTru;
@@ -15,11 +18,18 @@ public class NhanVien {
 	private Date ngayTuyenDung;
 	private double luong;
 	private NhanVien quanLy;
-	public NhanVien(String maNV, String tenNV, Date ngaySinh, String cccd, String noiCuTru, String sdt, String trinhDo,
-			String email, Date ngayTuyenDung, double luong, NhanVien quanLy) {
+	
+	public NhanVien(String maNV) {
+		super();
+		this.maNV = maNV;
+	}
+	
+	public NhanVien(String maNV, String tenNV, GioiTinh gioiTinh, Date ngaySinh, String cccd, String noiCuTru,
+			String sdt, String trinhDo, String email, Date ngayTuyenDung, double luong, NhanVien quanLy) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
+		this.gioiTinh = gioiTinh;
 		this.ngaySinh = ngaySinh;
 		this.cccd = cccd;
 		this.noiCuTru = noiCuTru;
@@ -41,6 +51,13 @@ public class NhanVien {
 	}
 	public void setTenNV(String tenNV) {
 		this.tenNV = tenNV;
+	}
+	
+	public GioiTinh getGioiTinh() {
+		return gioiTinh;
+	}
+	public void setGioiTinh(GioiTinh gioiTinh) {
+		this.gioiTinh = gioiTinh;
 	}
 	public Date getNgaySinh() {
 		return ngaySinh;
@@ -113,10 +130,9 @@ public class NhanVien {
 	}
 	@Override
 	public String toString() {
-		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", ngaySinh=" + ngaySinh + ", cccd=" + cccd
-				+ ", noiCuTru=" + noiCuTru + ", sdt=" + sdt + ", trinhDo=" + trinhDo + ", email=" + email
-				+ ", ngayTuyenDung=" + ngayTuyenDung + ", luong=" + luong + ", quanLy=" + quanLy
-				+ "]";
+		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh
+				+ ", cccd=" + cccd + ", noiCuTru=" + noiCuTru + ", sdt=" + sdt + ", trinhDo=" + trinhDo + ", email="
+				+ email + ", ngayTuyenDung=" + ngayTuyenDung + ", luong=" + luong + ", quanLy=" + quanLy + "]";
 	}
 	
 	
