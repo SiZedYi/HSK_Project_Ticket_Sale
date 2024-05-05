@@ -1,7 +1,10 @@
 package gui;
 
 public class ChuongTrinh {
-    public static void main(String[] args) {
-        new TrangChu();
+   try {
+    	ConnectDB.getInstance().connect();
+    }catch(SQLException e ) {
+    	e.printStackTrace();
     }
+    new Login();
 }
