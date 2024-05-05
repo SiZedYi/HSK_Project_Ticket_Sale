@@ -27,7 +27,7 @@ INSERT INTO Phim (maPhim, tenPhim, trangThai, gia, theLoai, gioiHanTuoi, hinhAnh
 ('P002', N'Lật mặt 7: Một điều ước', 'DANG_CHIEU', 90000, 'TINH_CAM', 'K', './image/lat-mat-7.jpg'),
 ('P003', N'Kung fu Panda', 'DANG_CHIEU', 80000, 'HOAT_HINH', 'P', './image/jpnpanda-dai-nao-lanh-dia-vua-su-tu.jpg'),
 ('P004', N'Vây Hàm', 'DANG_CHIEU', 90000, 'HANH_DONG', 'T16', './image/Vay-ham.jpg'),
-('P005', N'Tarot', 'DANG_CHIEU', 90000, 'KINH_DI', 'T18', './image/tarot.jpg');
+('P005', N'Tarot', 'DANG_CHIEU', 90000, 'TINH_CAM', 'T18', './image/tarot.jpg');
 -- Ghe
 INSERT INTO Ghe (maGhe, loaiGhe, giaGhe, coTheDat, phongChieu) VALUES
 ('A001', 'GHETIEUCHUAN', 50000, 1, 'PC001'),
