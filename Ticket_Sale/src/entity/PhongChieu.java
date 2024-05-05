@@ -16,6 +16,11 @@ public class PhongChieu {
 		this.loaiPC = loaiPC;
 		this.rap = rap;
 	}
+	public PhongChieu(String maPC) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.maPC = maPC;
+	}
 	public String getMaPC() {
 		return maPC;
 	}

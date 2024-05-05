@@ -14,6 +14,10 @@ public class Rap {
 		this.diaChi = diaChi;
 		this.sdtRap = sdtRap;
 	}
+	public Rap(String maRap) {
+		super();
+		this.maRap = maRap;
+	}
 	public String getMaRap() {
 		return maRap;
 	}
