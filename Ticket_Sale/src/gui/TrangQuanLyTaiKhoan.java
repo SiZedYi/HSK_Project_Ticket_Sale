@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,8 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
+import dao.NhanVien_Dao;
 import dao.TaiKhoan_Dao;
+import entity.NhanVien;
 import entity.TaiKhoan;
 import enums.InputType;
 import enums.Quyen;
@@ -35,60 +40,84 @@ public class TrangQuanLyTaiKhoan extends JPanel {
     public TrangQuanLyTaiKhoan() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(970, 700));
-
+        setBorder(new EmptyBorder(20, 20, 20, 20));
         // Label
         JLabel label = new JLabel("Danh sách tài khoản", SwingConstants.CENTER);
-        label.setPreferredSize(new Dimension(970, 50));
+        label.setPreferredSize(new Dimension(850, 50));
         label.setFont(new Font("Segoe UI", 0, 20));
         add(label, BorderLayout.NORTH);
-
+        
         // Table
+        JPanel tablePanel = new JPanel();
         bangTaiKhoan = new BangTaiKhoan();
         JScrollPane paneTaiKhoan = new JScrollPane(bangTaiKhoan);
-        paneTaiKhoan.setPreferredSize(new Dimension(970, 250));
-        add(paneTaiKhoan, BorderLayout.CENTER);
+        paneTaiKhoan.setPreferredSize(new Dimension(850, 250));
+        
+        
+        tablePanel.add(label);
+        tablePanel.add(paneTaiKhoan);
+        add(tablePanel, BorderLayout.NORTH);
 
         // Form
         JPanel formPanel = new JPanel();
-        formPanel.setPreferredSize(new Dimension(970, 400));
+        formPanel.setPreferredSize(new Dimension(970, 250));
         formPanel.setBackground(Color.WHITE);
-        formPanel.setLayout(new GridLayout(0, 2));
+        formPanel.setLayout(new GridLayout(0, 1));
+        formPanel.setBorder(new EmptyBorder(50, 20, 20, 20));
         
         maTKField = new InputGroub(300, 25, "Mã tài khoản:",20, 200, 25, InputType.STRING);
         tenDangNhapField = new InputGroub(300, 25, "Tên đăng nhập:",20, 200, 25, InputType.STRING);
         matKhauField = new InputGroub(300, 25, "Mật khẩu:",20, 200, 25, InputType.STRING);
         nvField = new InputGroub(300, 25, "Mã nhân viên:",20, 200, 25, InputType.STRING);
-        quyenField = new InputGroub(300, 25, "Quyền:",20, 200, 25, InputType.STRING);
+        quyenField = new InputGroub(300, 25, "Quyền:",20, 200, 25, InputType.COMBO_BOX, Quyen.values());
 
+        formPanel.add(Box.createHorizontalStrut(5)); 
         formPanel.add(maTKField);
         formPanel.add(tenDangNhapField);
         formPanel.add(matKhauField);
         formPanel.add(nvField);
         formPanel.add(quyenField);
-
+        formPanel.setOpaque(true);
+        formPanel.setBackground(new Color(0,0,0,0));
         // Buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
         addButton = new JButton("Thêm");
         editButton = new JButton("Chỉnh sửa");
         saveButton = new JButton("Lưu");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm");
-        searchField = new InputGroub(100, 25, "Mã cần tìm",20, 200, 25, InputType.STRING);
+        searchField = new InputGroub(250, 25, "Mã cần tìm:",15, 100, 25, InputType.STRING);
         fillButton = new JButton("Fill");
+        
+        addButton.setMinimumSize(new Dimension(150, 50));
 
-        buttonPanel.add(addButton);
-        buttonPanel.add(editButton);
-        buttonPanel.add(saveButton);
-        buttonPanel.add(deleteButton);
-        buttonPanel.add(findButton);
-        buttonPanel.add(searchField);
-        buttonPanel.add(fillButton);
-        buttonPanel.add(new DatePicker());
-        add(buttonPanel, BorderLayout.EAST);
+        
+        //buttonPanel.add(fillButton);
+        add(buttonPanel, BorderLayout.WEST);
+        JPanel searchPanel = new JPanel();
+        searchPanel.add(searchField);
+        searchPanel.add(findButton);
+        searchPanel.setPreferredSize(new Dimension(350, 50));
+        searchPanel.setBorder(BorderFactory.createTitledBorder("Tìm kiếm: "));
+        
+        buttonPanel.add(searchPanel);
+        buttonsPanel.add(Box.createHorizontalStrut(5));
+        buttonsPanel.add(addButton);
+        buttonsPanel.add(Box.createHorizontalStrut(5));
+        buttonsPanel.add(editButton);
+        buttonsPanel.add(Box.createHorizontalStrut(5));
+        buttonsPanel.add(saveButton);
+        buttonsPanel.add(Box.createHorizontalStrut(5));
+        buttonsPanel.add(deleteButton);
+        buttonsPanel.add(Box.createHorizontalStrut(5));
+        buttonPanel.add(buttonsPanel);
+        
 
         // Add formPanel to main Panel
-        add(formPanel, BorderLayout.SOUTH);
+        add(formPanel, BorderLayout.CENTER);
         
         // Cap nhat du lieu
         bangTaiKhoan.capNhatDuLieu(TaiKhoan_Dao.getInstance().getAllData());
@@ -129,6 +158,14 @@ public class TrangQuanLyTaiKhoan extends JPanel {
                     TaiKhoan_Dao.getInstance().update(newTaiKhoan);
                     
                 } else if (isAdding) {
+                	if(!TaiKhoan_Dao.getInstance().getByAttribute("maTK", maTKField.getText()).isEmpty()) {
+                		JOptionPane.showMessageDialog(null, "Mã đã tồn tại");
+                		return;
+                	}
+                	if(NhanVien_Dao.getInstance().getByAttribute("maNV", nvField.getText()).isEmpty()) {
+                		JOptionPane.showMessageDialog(null, "Không tồn tại nhân viên");
+                		return;
+                	}
                     TaiKhoan newTaiKhoan = createTaiKhoanFromFields();
                     TaiKhoan_Dao.getInstance().create(newTaiKhoan);
                 }
@@ -161,11 +198,6 @@ public class TrangQuanLyTaiKhoan extends JPanel {
             }
         });
         
-        fillButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                autoFill();
-            }
-        });
     }
 
     public void capNhatForm() {
@@ -203,28 +235,15 @@ public class TrangQuanLyTaiKhoan extends JPanel {
         quyenField.setEditable(editable);
     }
     
-    // Method to create a TaiKhoan object from input fields
     private TaiKhoan createTaiKhoanFromFields() {
         TaiKhoan newTaiKhoan = new TaiKhoan(maTKField.getText());
         newTaiKhoan.setTenDangNhap(tenDangNhapField.getText());
         newTaiKhoan.setMatKhau(matKhauField.getText());
-//        NhanVien nhanVien = NhanVien_Dao.getInstance().getNhanVienByMaNV(nvField.getText());
-//        if (nhanVien != null) {
-//            newTaiKhoan.setNhanVien(nhanVien);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại!");
-//        }
-//        // Set Quyen (assuming you have a way to get the selected Quyen)
-//        newTaiKhoan.setQuyen(getQuyenFromInput());
-        return null;
+        newTaiKhoan.setNhanVien(new NhanVien(nvField.getText()));
+        newTaiKhoan.setQuyen((Quyen) quyenField.getSelected());
+        System.out.println(newTaiKhoan);
+        return newTaiKhoan;
     }
 
-    private void autoFill() {
-//        maTKField.setText(Date.valueOf(LocalDate.now()).toString());
-//        tenDangNhapField.setText("user1");
-//        matKhauField.setText("password");
-//        nvField.setText("NV001"); // Replace with a valid NV maNV
-//        quyenField.setText("ADMIN"); // Replace with actual Quyen
-    }
 }
 

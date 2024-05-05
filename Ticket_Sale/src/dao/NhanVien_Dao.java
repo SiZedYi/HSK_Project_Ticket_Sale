@@ -69,6 +69,7 @@ public class NhanVien_Dao extends Dao{
 
 	
 	public boolean create(NhanVien nv) {
+		if(nv == null) return false;
 		int n = 0;
 		try {
 			Connection con = ConnectDB.getInstance().getConnection();

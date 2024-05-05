@@ -282,6 +282,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		}
 		else if(taiKhoan.size() == 1) {
 			if(taiKhoan.getFirst().getMatKhau().equals(mk)) {
+				LoginManager.currentUser = taiKhoan.getFirst().getMaTK();
 				return true;
 			}
 			JOptionPane.showMessageDialog(null, "Sai mật khẩu");

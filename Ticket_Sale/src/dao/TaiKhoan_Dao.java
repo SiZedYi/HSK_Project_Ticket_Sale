@@ -58,9 +58,13 @@ private static TaiKhoan_Dao instance;
         int n = 0;
         try {
             Connection con = ConnectDB.getInstance().getConnection();
-            String query = "INSERT INTO TaiKhoan (maTK, tenDangNhap, matKhau, maNV, quyen) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO TaiKhoan (maTK, tenDangNhap, matKhau, nhanVien, quyen) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement newStmt = con.prepareStatement(query);
-            insertingStatement(newStmt, taiKhoan, con);
+            newStmt.setNString(1, taiKhoan.getMaTK());
+            newStmt.setNString(2, taiKhoan.getTenDangNhap());
+            newStmt.setNString(3, taiKhoan.getMatKhau());
+            newStmt.setNString(4, taiKhoan.getNhanVien().getMaNV());
+            newStmt.setNString(5, taiKhoan.getQuyen().toString());
             n = newStmt.executeUpdate();
             newStmt.close();
         } catch (SQLException e) {
@@ -73,9 +77,14 @@ private static TaiKhoan_Dao instance;
         int n = 0;
         try {
             Connection con = ConnectDB.getInstance().getConnection();
-            String query = "UPDATE TaiKhoan SET tenDangNhap=?, matKhau=?, maNV=?, quyen=? WHERE maTK=?";
+            String query = "UPDATE TaiKhoan SET tenDangNhap=?, matKhau=?, nhanVien=?, quyen=? WHERE maTK=?";
             PreparedStatement updateStmt = con.prepareStatement(query);
-            updatingStatement(updateStmt, taiKhoan, con);
+            
+            updateStmt.setNString(1, taiKhoan.getTenDangNhap());
+            updateStmt.setNString(2, taiKhoan.getMatKhau());
+            updateStmt.setNString(3, taiKhoan.getNhanVien().getMaNV());
+            updateStmt.setNString(4, taiKhoan.getQuyen().toString());
+            updateStmt.setNString(5, taiKhoan.getMaTK());
             n = updateStmt.executeUpdate();
             updateStmt.close();
         } catch (SQLException e) {

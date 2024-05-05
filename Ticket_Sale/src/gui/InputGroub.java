@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.sql.Date;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -16,7 +19,7 @@ public class InputGroub extends JPanel {
     private JLabel titlePanel;
     private JTextField field;
     private DatePicker datePicker;
-    
+    private JComboBox comboBox;
 
     public InputGroub(int width, int height, String title, int fontSize, int fieldWidth, int fieldHeight,InputType type) {
     	super();
@@ -25,6 +28,7 @@ public class InputGroub extends JPanel {
         
         if(type == InputType.DATE) {
         	 datePicker = new DatePicker();
+        	 datePicker.setHardSize(new Dimension(fieldWidth, fieldHeight));
         	 add(datePicker);
         }
         else if(type == InputType.STRING){
@@ -34,6 +38,17 @@ public class InputGroub extends JPanel {
             add(field);
         }
        
+        setPreferredSize(new Dimension(width, height));
+    }
+    
+    public InputGroub(int width, int height, String title, int fontSize, int fieldWidth, int fieldHeight,InputType type, Object[] comboBoxOptions) {
+    	super();
+        initialize(title, fieldWidth, fieldHeight);
+        titlePanel.setFont(new Font("Segoe UI", 0, fontSize));
+        comboBox = new JComboBox(comboBoxOptions);
+        comboBox.setPreferredSize(new Dimension(fieldWidth, fieldHeight));
+        add(comboBox);
+        
         setPreferredSize(new Dimension(width, height));
     }
 
@@ -55,6 +70,7 @@ public class InputGroub extends JPanel {
     public void setEditable(boolean editable) {
         if(field!=null)field.setEditable(editable);
         if(datePicker!=null) datePicker.setEditable(editable);
+        if(comboBox!= null)comboBox.setEditable(editable);
     }
     
     public Date getDate() {
@@ -64,6 +80,17 @@ public class InputGroub extends JPanel {
     public void setDate(Date date) {
     	datePicker.setDate(date);
     }
-
+    
+    public Object getSelected() {
+    	return comboBox.getSelectedItem();
+    }
+    
+    public void setSelected(Object target) {
+    	comboBox.setSelectedItem(target);
+    }
+    
+    public void updateComboBox(Object[] newOptions) {
+        comboBox.setModel(new DefaultComboBoxModel<>(newOptions));
+    }
 }
 

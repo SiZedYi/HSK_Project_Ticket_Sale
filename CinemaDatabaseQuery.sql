@@ -220,5 +220,8 @@ VALUES
 
 Select * from Phim where gia = 100000
 
-select * from Phim
+select * from NhanVien
 
+insert into NhanVien (maNV, tenNV, gioiTinh, ngaySinh, cccd, noiCuTru, sdt, trinhDo, email, ngayTuyenDung, luong, quanLy) values ('2024-05-05',N'L� V?n A',N'Nam','2024-05-05','fasa',N'afaaa','030303',N'faf','aaa@gmail.com','2024-05-05','133.0','NV001')
+
+delete from NhanVien where maNV = '2024-05-05'

@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Date;
@@ -26,7 +28,7 @@ public class DatePicker extends JPanel {
             dayComboBox.addItem(String.valueOf(i));
         }
 
-        String[] vietnameseMonths = {"Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"};
+        String[] vietnameseMonths = {"Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"};
         for (String month : vietnameseMonths) {
             monthComboBox.addItem(month);
         }
@@ -43,9 +45,9 @@ public class DatePicker extends JPanel {
 
     public Date getDate() {
         int day = Integer.parseInt((String) dayComboBox.getSelectedItem());
-        int month = monthComboBox.getSelectedIndex() + 1;
+        int month = monthComboBox.getSelectedIndex();
         int year = Integer.parseInt((String) yearComboBox.getSelectedItem()) - 1900;
-        return new Date(year, month - 1, day);
+        return new Date(year, month, day);
     }
 
     public void setDate(Date date) {
@@ -65,5 +67,11 @@ public class DatePicker extends JPanel {
         dayComboBox.setEnabled(editable);
         monthComboBox.setEnabled(editable);
         yearComboBox.setEnabled(editable);
+    }
+    
+    public void setHardSize (Dimension dimension) {
+    	dayComboBox.setPreferredSize(new Dimension(dimension.width/4-5,dimension.height));
+    	monthComboBox.setPreferredSize(new Dimension(dimension.width/2-5,dimension.height));
+    	yearComboBox.setPreferredSize(new Dimension(dimension.width/4+5,dimension.height));
     }
 }

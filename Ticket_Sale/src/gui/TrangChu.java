@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,26 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dao.NhanVien_Dao;
+import entity.NhanVien;
+
 public class TrangChu extends JFrame implements ActionListener, MouseListener {
-	private JLabel lbl_ve,
-					lbl_nv,
-					lbl_thongke,
-					lbl_thongTinCaNhan,
-					img_logo,
-					lbl_home,
-					lbl_phim,
-					lbl_DangXuat;
-					
-	private JPanel  right_container,
-					left_container,
-					home_container,
-					phim_container, 
-					thongke_container,
-					thongTinCaNhan_container,
-					ve_container,
-					DangXuat_container, 
-					left_menu,
-					logo_container,nv_container;
+	
+	private JLabel lbl_ve,lbl_thongke,img_logo,lbl_home,lbl_phim,lbl_DangXuat,lbl_nv,lbl_ttcn, lbl_tk;
+	private JPanel  right_container,left_container,home_container,phim_container, thongke_container,ve_container,DangXuat_container, left_menu,logo_container,nv_container,ttcn_container,tk_container;
 
 
 
@@ -131,6 +117,19 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         
         nv_container.add(lbl_nv);
         
+        //TaiKhoan
+        tk_container = new JPanel();
+        tk_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        tk_container.setPreferredSize(new Dimension(200,50));
+
+        
+        lbl_tk = new JLabel("TÀI KHOẢN");
+        lbl_tk.setFont(new Font("Segoe UI", 0, 20));
+        lbl_tk.setForeground(Color.RED);
+        lbl_tk.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        tk_container.add(lbl_tk);
+        
         //thongke
         thongke_container = new JPanel();
         thongke_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
@@ -144,19 +143,19 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         
         thongke_container.add(lbl_thongke);
         
-      //thongke
-        thongTinCaNhan_container = new JPanel();
-        thongTinCaNhan_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
-        thongTinCaNhan_container.setPreferredSize(new Dimension(200,50));
+        //Thong tin ca nhan
+        ttcn_container = new JPanel();
+        ttcn_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        ttcn_container.setPreferredSize(new Dimension(200,50));
 
         
-        lbl_thongTinCaNhan = new JLabel("THÔNG TIN CÁ NHÂN");
-        lbl_thongTinCaNhan.setFont(new Font("Segoe UI", 0, 20));
-        lbl_thongTinCaNhan.setForeground(Color.RED);
-        lbl_thongTinCaNhan.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lbl_ttcn = new JLabel("THÔNG TIN CÁ NHÂN");
+        lbl_ttcn.setFont(new Font("Segoe UI", 0, 20));
+        lbl_ttcn.setForeground(Color.RED);
+        lbl_ttcn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        thongTinCaNhan_container.add(lbl_thongTinCaNhan);
         
+        ttcn_container.add(lbl_ttcn);
         //head
         left_menu = new JPanel();
         left_menu.setLayout(new BoxLayout(left_menu, BoxLayout.Y_AXIS));
@@ -165,12 +164,10 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         left_menu.add(phim_container);
         left_menu.add(ve_container);
         left_menu.add(nv_container);
+        left_menu.add(tk_container);
         left_menu.add(thongke_container);
-        left_menu.add(thongTinCaNhan_container);
+        left_menu.add(ttcn_container);
         left_container.add(left_menu,BorderLayout.CENTER);
-        
-        
-      
 
         
         //ĐĂNG XUẤT 
@@ -203,7 +200,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         
         //right
         right_container = new JPanel();
-        right_container.setPreferredSize(new Dimension(980,780));
+       right_container.setPreferredSize(new Dimension(980,780));
         
         right_container.setBorder( BorderFactory.createMatteBorder(1, 1, 1,1 ,Color.BLACK));
         
@@ -221,6 +218,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         pack();
         setVisible(true);
         
+        lbl_phim.addMouseListener(this);
         lbl_ve.addMouseListener(this);
 		
 		
@@ -240,10 +238,46 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		 if (e.getSource().equals(lbl_ve)) {
-			 swapPage(TrangQuanLyNhanVien.class);
-	        }
 		
+		 if (e.getSource().equals(lbl_ve)) {
+			 right_container.setVisible(true); // Hiển thị right_container
+		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+	        right_container.add(new TrangThongTinCaNhan()); // Thêm QuanLyVe vào right_container
+		        right_container.revalidate(); // Cập nhật giao diện
+		        right_container.repaint();
+	       }
+		 else if(e.getSource().equals(lbl_nv)) {
+			right_container.setVisible(true); // Hiển thị right_container
+	        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+	        right_container.add(new TrangQuanLyNhanVien()); // Thêm QuanLyVe vào right_container
+	        right_container.revalidate(); // Cập nhật giao diện
+	        right_container.repaint();
+		}
+		 else if(e.getSource().equals(lbl_tk)) {
+				right_container.setVisible(true); // Hiển thị right_container
+		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+		        right_container.add(new TrangQuanLyTaiKhoan()); // Thêm QuanLyVe vào right_container
+		        right_container.revalidate(); // Cập nhật giao diện
+		        right_container.repaint();
+			}
+		 else if(e.getSource().equals(lbl_nv)) {
+				right_container.setVisible(true); // Hiển thị right_container
+		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+		        right_container.add(new TrangQuanLyNhanVien()); // Thêm QuanLyVe vào right_container
+		        right_container.revalidate(); // Cập nhật giao diện
+		        right_container.repaint();
+			}
+		 
+		 else if(e.getSource().equals(lbl_ttcn)) {
+				right_container.setVisible(true); // Hiển thị right_container
+		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+		        right_container.add(new TrangThongTinCaNhan()); // Thêm QuanLyVe vào right_container
+		        right_container.revalidate(); // Cập nhật giao diện
+		        right_container.repaint();
+		        
+		        
+		        System.out.println("swap panel isn't working");
+			}
 	}
 
 	@Override
@@ -270,26 +304,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 		
 	}
 	
-	public void swapPage(Class<?> targetClass) {
-	    if (targetClass == null) {
-	        return; // Do nothing if the targetClass is null
-	    }
 
-	    try {
-	        right_container.setVisible(true); // Hiển thị right_container
-	        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
-	        
-	        // Tạo một instance của lớp targetClass và thêm vào right_container
-	        Object instance = targetClass.getDeclaredConstructor().newInstance();
-	        right_container.add((Component) instance); // Chỉ thêm nếu targetClass là một loại Component
-
-	        right_container.revalidate(); // Cập nhật giao diện
-	        right_container.repaint();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
 
 
 }

@@ -1,96 +1,91 @@
 package gui;
+import javax.swing.*;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import dao.NhanVien_Dao;
+import dao.TaiKhoan_Dao;
 import entity.NhanVien;
+import entity.TaiKhoan;
+import enums.InputType;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 
 public class TrangThongTinCaNhan extends JPanel {
     private NhanVien nhanVien;
 
-    // Labels
-    private JLabel maNVLabel = new JLabel("Mã NV:");
-    private JLabel tenNVLabel = new JLabel("Tên NV:");
-    private JLabel gioiTinhLabel = new JLabel("Giới tính:");
-    private JLabel ngaySinhLabel = new JLabel("Ngày sinh:");
-    private JLabel cccdLabel = new JLabel("CCCD:");
-    private JLabel noiCuTruLabel = new JLabel("Nơi cư trú:");
-    private JLabel sdtLabel = new JLabel("Số điện thoại:");
-    private JLabel trinhDoLabel = new JLabel("Trình độ:");
-    private JLabel emailLabel = new JLabel("Email:");
-    private JLabel ngayTuyenDungLabel = new JLabel("Ngày tuyển dụng:");
-    private JLabel luongLabel = new JLabel("Lương:");
-    private JLabel quanLyLabel = new JLabel("Quản lý:");
+    // InputGroubs
+    private InputGroub maNVGroup = new InputGroub(500, 40, "Mã NV:", 16, 200, 30, InputType.STRING);
+    private InputGroub tenNVGroup = new InputGroub(500, 40, "Tên NV:", 16, 200, 30, InputType.STRING);
+    private InputGroub gioiTinhGroup = new InputGroub(500, 40, "Giới tính:", 16, 200, 30, InputType.STRING);
+    private InputGroub ngaySinhGroup = new InputGroub(500, 40, "Ngày sinh:", 16, 200, 30, InputType.DATE);
+    private InputGroub cccdGroup = new InputGroub(500, 40, "CCCD:", 16, 200, 30, InputType.STRING);
+    private InputGroub noiCuTruGroup = new InputGroub(500, 40, "Nơi cư trú:", 16, 200, 30, InputType.STRING);
+    private InputGroub sdtGroup = new InputGroub(500, 40, "Số điện thoại:", 16, 200, 30, InputType.STRING);
+    private InputGroub trinhDoGroup = new InputGroub(500, 40, "Trình độ:", 16, 200, 30, InputType.STRING);
+    private InputGroub emailGroup = new InputGroub(500, 40, "Email:", 16, 200, 30, InputType.STRING);
+    private InputGroub ngayTuyenDungGroup = new InputGroub(500, 40, "Ngày tuyển dụng:", 16, 200, 30, InputType.DATE);
+    private InputGroub luongGroup = new InputGroub(500, 40, "Lương:", 16, 200, 30, InputType.STRING);
+    private InputGroub quanLyGroup = new InputGroub(500, 40, "Quản lý:", 16, 200, 30, InputType.STRING);
 
-    // Text Fields
-    private JTextField maNVField = new JTextField(20);
-    private JTextField tenNVField = new JTextField(20);
-    private JTextField gioiTinhField = new JTextField(20);
-    private JTextField ngaySinhField = new JTextField(20);
-    private JTextField cccdField = new JTextField(20);
-    private JTextField noiCuTruField = new JTextField(20);
-    private JTextField sdtField = new JTextField(20);
-    private JTextField trinhDoField = new JTextField(20);
-    private JTextField emailField = new JTextField(20);
-    private JTextField ngayTuyenDungField = new JTextField(20);
-    private JTextField luongField = new JTextField(20);
-    private JTextField quanLyField = new JTextField(20);
-
-    public TrangThongTinCaNhan(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public TrangThongTinCaNhan() {
+        TaiKhoan tk = (TaiKhoan) TaiKhoan_Dao.getInstance().getByAttribute("maTK", LoginManager.currentUser).getFirst();
+        this.nhanVien = (NhanVien) NhanVien_Dao.getInstance().getByAttribute("maNV", tk.getNhanVien().getMaNV()).getFirst();
         setupUI();
         displayNhanVienInfo();
     }
 
     private void setupUI() {
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.anchor = GridBagConstraints.WEST;
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        addLabelAndField(maNVLabel, maNVField, gbc);
-        addLabelAndField(tenNVLabel, tenNVField, gbc);
-        addLabelAndField(gioiTinhLabel, gioiTinhField, gbc);
-        addLabelAndField(ngaySinhLabel, ngaySinhField, gbc);
-        addLabelAndField(cccdLabel, cccdField, gbc);
-        addLabelAndField(noiCuTruLabel, noiCuTruField, gbc);
-        addLabelAndField(sdtLabel, sdtField, gbc);
-        addLabelAndField(trinhDoLabel, trinhDoField, gbc);
-        addLabelAndField(emailLabel, emailField, gbc);
-        addLabelAndField(ngayTuyenDungLabel, ngayTuyenDungField, gbc);
-        addLabelAndField(luongLabel, luongField, gbc);
-        addLabelAndField(quanLyLabel, quanLyField, gbc);
-    }
+        JLabel titleLabel = new JLabel("Thông tin cá nhân của tôi:");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18)); 
+        add(titleLabel, BorderLayout.NORTH);
 
-    private void addLabelAndField(JLabel label, JTextField textField, GridBagConstraints gbc) {
-        gbc.gridx = 0;
-        this.add(label, gbc);
-        gbc.gridx = 1;
-        this.add(textField, gbc);
-        gbc.gridy++;
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(0, 1, 0, 10)); 
+        add(inputPanel, BorderLayout.CENTER);
+
+        inputPanel.add(maNVGroup);
+        inputPanel.add(tenNVGroup);
+        inputPanel.add(gioiTinhGroup);
+        inputPanel.add(ngaySinhGroup);
+        inputPanel.add(cccdGroup);
+        inputPanel.add(noiCuTruGroup);
+        inputPanel.add(sdtGroup);
+        inputPanel.add(trinhDoGroup);
+        inputPanel.add(emailGroup);
+        inputPanel.add(ngayTuyenDungGroup);
+        inputPanel.add(luongGroup);
+        inputPanel.add(quanLyGroup);
     }
 
     private void displayNhanVienInfo() {
-        maNVField.setText(nhanVien.getMaNV());
-        tenNVField.setText(nhanVien.getTenNV());
-        gioiTinhField.setText(nhanVien.getGioiTinh().toString());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        ngaySinhField.setText(dateFormat.format(nhanVien.getNgaySinh()));
-        cccdField.setText(nhanVien.getCccd());
-        noiCuTruField.setText(nhanVien.getNoiCuTru());
-        sdtField.setText(nhanVien.getSdt());
-        trinhDoField.setText(nhanVien.getTrinhDo());
-        emailField.setText(nhanVien.getEmail());
-        ngayTuyenDungField.setText(dateFormat.format(nhanVien.getNgayTuyenDung()));
-        luongField.setText(String.valueOf(nhanVien.getLuong()));
-        quanLyField.setText(nhanVien.getQuanLy() != null ? nhanVien.getQuanLy().getTenNV() : "");
+        maNVGroup.setText(nhanVien.getMaNV());
+        tenNVGroup.setText(nhanVien.getTenNV());
+        gioiTinhGroup.setText(nhanVien.getGioiTinh().toString());
+        ngaySinhGroup.setDate(nhanVien.getNgaySinh());
+        cccdGroup.setText(nhanVien.getCccd());
+        noiCuTruGroup.setText(nhanVien.getNoiCuTru());
+        sdtGroup.setText(nhanVien.getSdt());
+        trinhDoGroup.setText(nhanVien.getTrinhDo());
+        emailGroup.setText(nhanVien.getEmail());
+        ngayTuyenDungGroup.setDate(nhanVien.getNgayTuyenDung());
+        luongGroup.setText(String.valueOf(nhanVien.getLuong()));
+        quanLyGroup.setText(nhanVien.getQuanLy() != null ? nhanVien.getQuanLy().getTenNV() : "");
+
+        maNVGroup.setEditable(false);
+        tenNVGroup.setEditable(false);
+        gioiTinhGroup.setEditable(false);
+        ngaySinhGroup.setEditable(false);
+        cccdGroup.setEditable(false);
+        noiCuTruGroup.setEditable(false);
+        sdtGroup.setEditable(false);
+        trinhDoGroup.setEditable(false);
+        emailGroup.setEditable(false);
+        ngayTuyenDungGroup.setEditable(false);
+        luongGroup.setEditable(false);
+        quanLyGroup.setEditable(false);
     }
 }
