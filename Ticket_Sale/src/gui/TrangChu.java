@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import connectDB.ConnectDB;
+import dao.Phim_Dao;
 
 
 
@@ -48,20 +49,30 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
 		JPanel container = new JPanel();
         JPanel left_container = new JPanel();
         JPanel menu_container = new JPanel();
+        
         JLabel lbl_Menu = new JLabel();
         JPanel header_container = new JPanel();
         JLabel txt_Header = new JLabel();
+        
         JPanel phim_container = new JPanel();
         JLabel lbl_phim = new JLabel();
+        
         JPanel home_container = new JPanel();
         JLabel lbl_home = new JLabel();
+        
         JPanel ve_container = new JPanel();
         JLabel lbl_ve = new JLabel();
+        
         JPanel thongke_container = new JPanel();
         JLabel lbl_thongke = new JLabel();
+        
+        JPanel nhanVien_container = new JPanel();
+        JLabel lbl_nhanVien = new JLabel();
+        
         JPanel DangXuat_container = new JPanel();
         JLabel lbl_DangXuat = new JLabel();
         JPanel right_container = new JPanel();
+       
         
         
         setTitle("Nhóm 3 con báo");
@@ -167,7 +178,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         lbl_thongke.setPreferredSize(new Dimension(236, 45));
         //thêm sự kiện 
         thongke_container.add(lbl_thongke);
-        
+     
+      //Nhân Viên
+        nhanVien_container.setBackground(new Color(253, 245, 244));
+        nhanVien_container.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        nhanVien_container.setAlignmentX(0.0F);
+        nhanVien_container.setMaximumSize(new Dimension(204, 60));
+
+        lbl_nhanVien.setFont(new java.awt.Font("Segoe UI", 0, 24));
+        lbl_nhanVien.setHorizontalAlignment(SwingConstants.CENTER);
+        lbl_nhanVien.setText("NHÂN VIÊN");
+        lbl_nhanVien.setForeground(Color.BLACK);
+        lbl_nhanVien.setAlignmentY(0.0F);
+        lbl_nhanVien.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lbl_nhanVien.setMaximumSize(new Dimension(236, 60));
+        lbl_nhanVien.setPreferredSize(new Dimension(236, 45));
+        //thêm sự kiện 
+        nhanVien_container.add(lbl_nhanVien);
         
         
      // Button đăng xuất
@@ -199,6 +226,7 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
             .addComponent(home_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(phim_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(thongke_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(nhanVien_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(header_container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(ve_container, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(DangXuat_container, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,6 +246,8 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
                 .addComponent(ve_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(thongke_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(nhanVien_container, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
@@ -270,6 +300,17 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
 	 }
 	 
 	 public static void main(String args[]) {
+		//ConnectDB
+			ConnectDB dbConnection = new ConnectDB();
+	        try {
+				dbConnection.connect();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	        
+	        //All Dao
+	        Phim_Dao phimDao = new Phim_Dao();
+	    	//////////////
 		 try {
 				ConnectDB.getInstance().connect();
 			} catch (SQLException e) {

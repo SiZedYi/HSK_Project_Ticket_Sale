@@ -15,8 +15,18 @@ import enums.GioiTinh;
 
 public class ChuongTrinh {
     public static void main(String[] args) {
-    	
-        new TrangChuLuong();
+    	//ConnectDB
+		ConnectDB dbConnection = new ConnectDB();
+        try {
+			dbConnection.connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        //All Dao
+        Phim_Dao phimDao = new Phim_Dao();
+    	//////////////
+        new TrangChu();
 
     }
 }
