@@ -1,79 +1,246 @@
 package gui;
 
-import java.sql.SQLException;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-import javax.swing.SwingUtilities;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import connectDB.ConnectDB;
-import dao.HoaDon_Dao;
+public class TrangChu extends JFrame implements ActionListener, MouseListener {
+	private JLabel lbl_ve,lbl_thongke,img_logo,lbl_home,lbl_phim,lbl_DangXuat,lbl_nv;
+	private JPanel  right_container,left_container,home_container,phim_container, thongke_container,ve_container,DangXuat_container, left_menu,logo_container,nv_container;
 
-public class TrangChu extends JFrame {
 
-    public TrangChu() {
-        setTitle("Trang Chủ");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(new Color(204, 166, 166));
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        setGlobalFont(new Font("Arial", Font.BOLD, 14));
+
+	public TrangChu(){
+		
+		initComponents();
+		setRole();
+			
+	}
+	
+	public void setRole(){
+        
+    }
+	
+
+	private void initComponents() {
+		setTitle("Nhóm 3 con báo");
+		setSize(1200, 780);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+		
+		
+		//left
+        left_container = new JPanel();
+        left_container.setBackground(new Color(253, 245, 244));
+        left_container.setPreferredSize(new Dimension(200,780));
         
         
-        //Table
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setPreferredSize(new Dimension(800,600));
-        BangHoaDon bangHoaDon= new BangHoaDon();
-        mainPanel.add(new JScrollPane(bangHoaDon), BorderLayout.CENTER);
+        //logo
+        logo_container= new JPanel();
+        ImageIcon icon = new ImageIcon("data/icon/logo.jpg");// 
+		Image image = icon.getImage();//Lấy hình ảnh từ ImageIcon
+		Image resizedImage = image.getScaledInstance(200, 90, Image.SCALE_SMOOTH);
+		ImageIcon resizedIcon = new ImageIcon(resizedImage);
+		img_logo = new JLabel(resizedIcon);
+		logo_container.add(img_logo);
+		
+		left_container.add(logo_container,BorderLayout.NORTH);
+		
+        //home
+        home_container = new JPanel();
+        home_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        home_container.setPreferredSize(new Dimension(200,50));
+       
+        
+        lbl_home = new JLabel("HOME");
+        lbl_home.setFont(new Font("Segoe UI", 0, 20));
+        lbl_home.setForeground(Color.RED);
+        lbl_home.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        home_container.add(lbl_home);
+        
+        //phim
+        phim_container = new JPanel();
+        phim_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        phim_container.setPreferredSize(new Dimension(200,50));
+
+        lbl_phim = new JLabel("PHIM");
+        lbl_phim.setFont(new Font("Segoe UI", 0, 20));
+        lbl_phim.setForeground(Color.RED);
+        lbl_phim.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        phim_container.add(lbl_phim);
         
         
-        /*
-         * 
-         *Phần connect !!!
-         * 
-         */
-        ConnectDB dbConnection = new ConnectDB();
-        JLabel connectResult= new JLabel("Ket qua Ket noi");
-        try {
-			dbConnection.connect();
-			connectResult.setText("Kết nối database thành công");
-		} catch (SQLException e) {
-			connectResult.setText("Kết nối database thất bại");
-			e.printStackTrace();
-		}
+        //Vé
+        ve_container = new JPanel();
+        ve_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        ve_container.setPreferredSize(new Dimension(200,50));
+
         
-        //Đọc dữ liệu hóa đơn
-        HoaDon_Dao hoaDonDao = new HoaDon_Dao();
-        bangHoaDon.CapNhatDuLieu(hoaDonDao.getAllData());
+        lbl_ve = new JLabel("VÉ");
+        lbl_ve.setFont(new Font("Segoe UI", 0, 20));
+        lbl_ve.setForeground(Color.RED);
+        lbl_ve.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        //Phần hoàn thiện trang chủ
-        mainPanel.add(connectResult, BorderLayout.NORTH);
-        add(mainPanel);
+        ve_container.add(lbl_ve);
+        
+      //Nhân viên 
+        nv_container = new JPanel();
+        nv_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        nv_container.setPreferredSize(new Dimension(200,50));
+
+        
+        lbl_nv = new JLabel("NHÂN VIÊN");
+        lbl_nv.setFont(new Font("Segoe UI", 0, 20));
+        lbl_nv.setForeground(Color.RED);
+        lbl_nv.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        nv_container.add(lbl_nv);
+        
+        //thongke
+        thongke_container = new JPanel();
+        thongke_container.setBorder( BorderFactory.createMatteBorder(1, 0, 1,0 ,Color.BLACK));
+        thongke_container.setPreferredSize(new Dimension(200,50));
+
+        
+        lbl_thongke = new JLabel("THỐNG KÊ");
+        lbl_thongke.setFont(new Font("Segoe UI", 0, 20));
+        lbl_thongke.setForeground(Color.RED);
+        lbl_thongke.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        thongke_container.add(lbl_thongke);
+        
+        //head
+        left_menu = new JPanel();
+        left_menu.setLayout(new BoxLayout(left_menu, BoxLayout.Y_AXIS));
+        
+        left_menu.add(home_container);
+        left_menu.add(phim_container);
+        left_menu.add(ve_container);
+        left_menu.add(nv_container);
+        left_menu.add(thongke_container);
+        left_container.add(left_menu,BorderLayout.CENTER);
+
+        
+        //ĐĂNG XUẤT 
+        DangXuat_container = new JPanel();
+        DangXuat_container.setBorder( BorderFactory.createMatteBorder(1, 0, 0,0 ,Color.BLACK));
+        DangXuat_container.setPreferredSize(new Dimension(200,50));
+        
+        lbl_DangXuat = new JLabel("ĐĂNG XUẤT");
+        lbl_DangXuat.setFont(new Font("Segoe UI", 0, 20));
+        lbl_DangXuat.setForeground(Color.RED);
+        lbl_DangXuat.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        DangXuat_container.add(lbl_DangXuat);
+       
+        
+       left_container.add(DangXuat_container,BorderLayout.SOUTH);
+        
+        
+        
+        
+        add(left_container,BorderLayout.WEST);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //right
+        right_container = new JPanel();
+       right_container.setPreferredSize(new Dimension(980,780));
+        
+        right_container.setBorder( BorderFactory.createMatteBorder(1, 1, 1,1 ,Color.BLACK));
+        
+      
+//        addPanel(right_container);
+
+       
+       
+        
+        
+        add(right_container,BorderLayout.EAST);
+        
+        
+       
         pack();
         setVisible(true);
-    }
+        
+        lbl_ve.addMouseListener(this);
+		
+		
+		
+		
+	}
 
-    private void setGlobalFont(Font font) {
-        java.util.Enumeration keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-            if (value instanceof javax.swing.plaf.FontUIResource) {
-                UIManager.put(key, font);
-            }
-        }
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+		 if (e.getSource().equals(lbl_ve)) {
+			 right_container.setVisible(true); // Hiển thị right_container
+		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+		        right_container.add(new QuanLyVe()); // Thêm QuanLyVe vào right_container
+		        right_container.revalidate(); // Cập nhật giao diện
+		        right_container.repaint();
+	        }
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 
 
 }
