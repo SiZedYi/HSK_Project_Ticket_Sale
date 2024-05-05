@@ -249,25 +249,6 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		Object o = e.getSource();
 		if (o.equals(btnLogin)) {
 			
-//			Connection conn = KetNoiSQL.getConnection();
-//		       try{
-//		       String sql="SELECT * FROM TaiKhoan WHERE tenTaiKhoan=? AND matKhau=? and (isDeleted is null or isDeleted = 0)";
-//		       PreparedStatement stmt= conn.prepareCall(sql);
-//		       stmt.setString(1, txt_TaiKhoan.getText());
-//		       stmt.setString(2, String.valueOf(pwd_MatKhau.getPassword()));
-//		       ResultSet rs= stmt.executeQuery();
-//		       if(rs.next()){
-//		           JOptionPane.showMessageDialog(null,"Đăng nhập thành công");
-//		           nhanVien = nv_DAO.getNhanVienByID(rs.getString(4));
-//		           this.setVisible(false);
-//		           new TrangChu().setVisible(true);
-//		       }else{
-//		           JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng");
-//		           pwd_MatKhau.setText("");
-//		       }
-//		       }catch(Exception ex){
-//		       JOptionPane.showMessageDialog(null, ex);
-//		       }
 			
 			new TrangChu();
 			dispose();
