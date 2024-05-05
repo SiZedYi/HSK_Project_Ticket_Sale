@@ -186,6 +186,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         pack();
         setVisible(true);
         
+        lbl_phim.addMouseListener(this);
         lbl_ve.addMouseListener(this);
 		
 		
@@ -212,8 +213,14 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 		        right_container.add(new QuanLyVe()); // Thêm QuanLyVe vào right_container
 		        right_container.revalidate(); // Cập nhật giao diện
 		        right_container.repaint();
-	        }
-		
+	       }
+		 else if(e.getSource().equals(lbl_phim)) {
+			right_container.setVisible(true); // Hiển thị right_container
+	        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+	        right_container.add(new EditMovie()); // Thêm QuanLyVe vào right_container
+	        right_container.revalidate(); // Cập nhật giao diện
+	        right_container.repaint();
+		}
 	}
 
 	@Override
