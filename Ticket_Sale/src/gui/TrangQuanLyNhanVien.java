@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -25,11 +26,12 @@ import javax.swing.SwingConstants;
 import dao.NhanVien_Dao;
 import entity.NhanVien;
 import enums.GioiTinh;
+import enums.InputType;
 import tables.BangNhanVien;
 
 public class TrangQuanLyNhanVien extends JPanel {
     private BangNhanVien bangNhanVien;
-    private InputTextField maNVField, tenNVField, gioiTinhField, ngaySinhField, cccdField, noiCuTruField,
+    private InputGroub maNVField, tenNVField, gioiTinhField, ngaySinhField, cccdField, noiCuTruField,
             sdtField, trinhDoField, emailField, ngayTuyenDungField, luongField, quanLyField, searchField;
     private JButton addButton, editButton, saveButton, deleteButton, findButton, fillButton;
     private boolean isAdding = false;
@@ -57,18 +59,18 @@ public class TrangQuanLyNhanVien extends JPanel {
         formPanel.setBackground(Color.WHITE);
         formPanel.setLayout(new GridLayout(0, 2));
         
-        maNVField = new InputTextField(300, 25, "Mã nhân viên:", 200, 25);
-        tenNVField = new InputTextField(300, 25, "Tên nhân viên:", 200, 25);
-        gioiTinhField = new InputTextField(300, 25, "Giới tính:", 200, 25);
-        ngaySinhField = new InputTextField(300, 25, "Ngày sinh:", 200, 25);
-        cccdField = new InputTextField(300, 25, "CCCD:", 200, 25);
-        noiCuTruField = new InputTextField(300, 25, "Nơi cư trú:", 200, 25);
-        sdtField = new InputTextField(300, 25, "Số điện thoại:", 200, 25);
-        trinhDoField = new InputTextField(300, 25, "Trình độ:", 200, 25);
-        emailField = new InputTextField(300, 25, "Email:", 200, 25);
-        ngayTuyenDungField = new InputTextField(300, 25, "Ngày tuyển dụng:", 200, 25);
-        luongField = new InputTextField(300, 25, "Lương:", 200, 25);
-        quanLyField = new InputTextField(300, 25, "Quản lý:", 200, 25);
+        maNVField = new InputGroub(300, 25, "Mã nhân viên:",20, 200, 25, InputType.STRING);
+        tenNVField = new InputGroub(300, 25, "Tên nhân viên:",20, 200, 25, InputType.STRING);
+        gioiTinhField = new InputGroub(300, 25, "Giới tính:",20, 200, 25, InputType.STRING);
+        ngaySinhField = new InputGroub(300, 25, "Ngày sinh:", 20, 200, 25, InputType.DATE);
+        cccdField = new InputGroub(300, 25, "CCCD:",20, 200, 25, InputType.STRING);
+        noiCuTruField = new InputGroub(300, 25, "Nơi cư trú:",20, 200, 25, InputType.STRING);
+        sdtField = new InputGroub(300, 25, "Số điện thoại:",20, 200, 25, InputType.STRING);
+        trinhDoField = new InputGroub(300, 25, "Trình độ:",20, 200, 25, InputType.STRING);
+        emailField = new InputGroub(300, 25, "Email:",20, 200, 25, InputType.STRING);
+        ngayTuyenDungField = new InputGroub(300, 25, "Ngày tuyển dụng:",20, 200, 25, InputType.DATE);
+        luongField = new InputGroub(300, 25, "Lương:",20, 200, 25, InputType.STRING);
+        quanLyField = new InputGroub(300, 25, "Quản lý:",20, 200, 25, InputType.STRING);
 
         formPanel.add(maNVField);
         formPanel.add(tenNVField);
@@ -91,7 +93,7 @@ public class TrangQuanLyNhanVien extends JPanel {
         saveButton = new JButton("Lưu");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm");
-        searchField = new InputTextField(100, 25, "Mã cần tìm", 50, 25);
+        searchField = new InputGroub(100, 25, "Mã cần tìm",20, 200, 25, InputType.STRING);
         fillButton = new JButton("Fill");
 
         buttonPanel.add(addButton);
@@ -106,6 +108,7 @@ public class TrangQuanLyNhanVien extends JPanel {
         
         //Add formPanel to main Panel
         add(formPanel, BorderLayout.SOUTH);
+        
         // Cap nhat du lieu
         bangNhanVien.capNhatDuLieu(NhanVien_Dao.getInstance().getAllData());
 
@@ -198,7 +201,7 @@ public class TrangQuanLyNhanVien extends JPanel {
             maNVField.setText(nhanVien.getMaNV());
             tenNVField.setText(nhanVien.getTenNV());
             gioiTinhField.setText(nhanVien.getGioiTinh().toString());
-            ngaySinhField.setText(nhanVien.getNgaySinh().toString());
+            ngaySinhField.setDate(nhanVien.getNgaySinh());
             cccdField.setText(nhanVien.getCccd());
             noiCuTruField.setText(nhanVien.getNoiCuTru());
             sdtField.setText(nhanVien.getSdt());
@@ -214,13 +217,13 @@ public class TrangQuanLyNhanVien extends JPanel {
         maNVField.setText("");
         tenNVField.setText("");
         gioiTinhField.setText("");
-        ngaySinhField.setText("");
+        ngaySinhField.setDate(Date.valueOf("1950-01-01"));
         cccdField.setText("");
         noiCuTruField.setText("");
         sdtField.setText("");
         trinhDoField.setText("");
         emailField.setText("");
-        ngayTuyenDungField.setText("");
+        ngayTuyenDungField.setDate(Date.valueOf("1950-01-01"));
         luongField.setText("");
         quanLyField.setText("");
     }
@@ -240,36 +243,25 @@ public class TrangQuanLyNhanVien extends JPanel {
         quanLyField.setEditable(editable);
     }
     
- // Method to create a NhanVien object from input fields
     private NhanVien createNhanVienFromFields() {
     	NhanVien newNhanVien = new NhanVien(maNVField.getText());
-        
-        
-        // Set GioiTinh
-        GioiTinh gioiTinh = GioiTinh.stringToPhuongThucGioiTinh(gioiTinhField.getText());
-        
-        Date ngaySinh = Date.valueOf(LocalDate.now());
-        // Set NgaySinh (assuming the format is a string representing the date)
-        // You need to parse it to a Date object before setting
-        // Example: newNhanVien.setNgaySinh(parseDate(ngaySinhField.getText()));
-        
-        
-        
-        // Set NgayTuyenDung (similar to NgaySinh)
-        Date ngayTuyenDung = Date.valueOf(LocalDate.now());
-        // Set Luong (parse to double)
-        double luong = 133;
-        // You need to handle QuanLy separately since it's another NhanVien object
-        // Example: newNhanVien.setQuanLy(getQuanLyFromInput());
+       
+        double luong = 0;
+        try {
+        	luong = Double.parseDouble(luongField.getText());
+        }catch(Exception e){
+        	JOptionPane.showMessageDialog(null,"Lương phải là số thập phân");
+        }
+
         newNhanVien.setTenNV(tenNVField.getText());
-        newNhanVien.setNgaySinh(ngaySinh);
-        newNhanVien.setGioiTinh(gioiTinh);
+        newNhanVien.setNgaySinh(ngaySinhField.getDate());
+        newNhanVien.setGioiTinh(GioiTinh.stringToPhuongThucGioiTinh(gioiTinhField.getText()));
         newNhanVien.setCccd(cccdField.getText());
         newNhanVien.setNoiCuTru(noiCuTruField.getText());
         newNhanVien.setSdt(sdtField.getText());
         newNhanVien.setTrinhDo(trinhDoField.getText());
         newNhanVien.setEmail(emailField.getText());
-        newNhanVien.setNgayTuyenDung(ngayTuyenDung);
+        newNhanVien.setNgayTuyenDung(ngayTuyenDungField.getDate());
         newNhanVien.setLuong(luong);
         newNhanVien.setQuanLy(new NhanVien(quanLyField.getText()));
         return newNhanVien;
@@ -279,13 +271,13 @@ public class TrangQuanLyNhanVien extends JPanel {
         maNVField.setText(Date.valueOf(LocalDate.now()).toString());
         tenNVField.setText("Lê Văn A");
         gioiTinhField.setText("Nam");
-        ngaySinhField.setText("1995-06-06");
+        ngaySinhField.setDate(Date.valueOf("1950-01-01"));
         cccdField.setText("fasa");
         noiCuTruField.setText("afaaa");
         sdtField.setText("030303");
         trinhDoField.setText("faf");
         emailField.setText("aaa@gmail.com");
-        ngayTuyenDungField.setText("2021-07-07");
+        ngayTuyenDungField.setDate(Date.valueOf("1950-01-01"));
         luongField.setText("2330.0");
         quanLyField.setText("NV001");
     }

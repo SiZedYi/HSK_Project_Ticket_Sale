@@ -21,12 +21,13 @@ import javax.swing.SwingConstants;
 
 import dao.TaiKhoan_Dao;
 import entity.TaiKhoan;
+import enums.InputType;
 import enums.Quyen;
 import tables.BangTaiKhoan;
 
 public class TrangQuanLyTaiKhoan extends JPanel {
     private BangTaiKhoan bangTaiKhoan;
-    private InputTextField maTKField, tenDangNhapField, matKhauField, nvField, quyenField, searchField;
+    private InputGroub maTKField, tenDangNhapField, matKhauField, nvField, quyenField, searchField;
     private JButton addButton, editButton, saveButton, deleteButton, findButton, fillButton;
     private boolean isAdding = false;
     private boolean isEditing = false;
@@ -53,11 +54,11 @@ public class TrangQuanLyTaiKhoan extends JPanel {
         formPanel.setBackground(Color.WHITE);
         formPanel.setLayout(new GridLayout(0, 2));
         
-        maTKField = new InputTextField(300, 25, "Mã tài khoản:", 200, 25);
-        tenDangNhapField = new InputTextField(300, 25, "Tên đăng nhập:", 200, 25);
-        matKhauField = new InputTextField(300, 25, "Mật khẩu:", 200, 25);
-        nvField = new InputTextField(300, 25, "Mã nhân viên:", 200, 25);
-        quyenField = new InputTextField(300, 25, "Quyền:", 200, 25);
+        maTKField = new InputGroub(300, 25, "Mã tài khoản:",20, 200, 25, InputType.STRING);
+        tenDangNhapField = new InputGroub(300, 25, "Tên đăng nhập:",20, 200, 25, InputType.STRING);
+        matKhauField = new InputGroub(300, 25, "Mật khẩu:",20, 200, 25, InputType.STRING);
+        nvField = new InputGroub(300, 25, "Mã nhân viên:",20, 200, 25, InputType.STRING);
+        quyenField = new InputGroub(300, 25, "Quyền:",20, 200, 25, InputType.STRING);
 
         formPanel.add(maTKField);
         formPanel.add(tenDangNhapField);
@@ -73,7 +74,7 @@ public class TrangQuanLyTaiKhoan extends JPanel {
         saveButton = new JButton("Lưu");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm");
-        searchField = new InputTextField(100, 25, "Mã cần tìm", 50, 25);
+        searchField = new InputGroub(100, 25, "Mã cần tìm",20, 200, 25, InputType.STRING);
         fillButton = new JButton("Fill");
 
         buttonPanel.add(addButton);
@@ -83,6 +84,7 @@ public class TrangQuanLyTaiKhoan extends JPanel {
         buttonPanel.add(findButton);
         buttonPanel.add(searchField);
         buttonPanel.add(fillButton);
+        buttonPanel.add(new DatePicker());
         add(buttonPanel, BorderLayout.EAST);
 
         // Add formPanel to main Panel

@@ -241,7 +241,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		 if (e.getSource().equals(lbl_ve)) {
-			 swapPage(TrangQuanLyTaiKhoan.class);
+			 swapPage(TrangQuanLyNhanVien.class);
 	        }
 		
 	}
