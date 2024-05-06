@@ -45,7 +45,7 @@ public abstract class Dao<T> {
 		PreparedStatement statement = null;
 		
 		try {
-			String query = "Select * from " + tableName + " where " + attribute + " = \'" + filterValue + "\'";
+			String query = "Select * from " + tableName + " where " + attribute + " = N\'" + filterValue + "\'";
 			
 			statement=con.prepareStatement(query);
 			ResultSet rs = statement.executeQuery();

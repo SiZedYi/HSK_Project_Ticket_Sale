@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -30,18 +29,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import dao.TaiKhoan_Dao;
 import entity.TaiKhoan;
-
-//import dao.NhanVien_DAO;
-//import entity.NhanVien;
+import dao.NhanVien_Dao;
+import entity.NhanVien;
 
 public class Login extends JFrame implements ActionListener, MouseListener {
+
 		private JTextField txt_username;
 	    private JPasswordField txt_password;
 	    private JLabel lbl_hiddenicon;
 		private JButton btnLogin;
+		private JLabel lblfgpw;
     
 
 //    public static NhanVien nhanVien = null;
@@ -54,7 +53,6 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 //        KetNoiSQL.getInstance().connect();
         
         initComponents();
-        
         
 
     }
@@ -123,7 +121,11 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         lbl_username.setPreferredSize(new Dimension(0, 30));
         JPanel ptxtn = new JPanel();
         ptxtn.setLayout(new BoxLayout(ptxtn, BoxLayout.X_AXIS));
+
         txt_username =  new JTextField(30);
+
+        JTextField txt_username =  new JTextField(30);
+
         txt_username.setBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5));
         JLabel lbl_usericon= new JLabel(new ImageIcon("data/icon/userLogin.png"));
         
@@ -163,11 +165,11 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         pfgpw.setBackground(new Color(247,210,158));
 		pfgpw.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
-		JLabel lblfgpw = new JLabel("Foget Password?");
+		lblfgpw = new JLabel("Foget Password?");
 		lblfgpw.setFont(new Font("Dosis", 0, 14));
 		lblfgpw.setForeground(Color.BLACK);
 		lblfgpw.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		pfgpw.add(lblfgpw);
+		//pfgpw.add(lblfgpw);
         
 		
 		
@@ -200,11 +202,6 @@ public class Login extends JFrame implements ActionListener, MouseListener {
      	
 	}
 
-  
-    public static void main(String args[]) {
-        new Login();
-    }
-
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -216,6 +213,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 	            }
 	        }
 		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -252,18 +250,19 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
+		txt_username.setText("user1");
 		if (o.equals(btnLogin)) {
-			
+			System.out.println(txt_username.getText());
 			if(checkAccount(txt_username.getText(),String.valueOf(txt_password.getPassword()))){
 				new TrangChu();
-				dispose();
+				LoginManager.currentUser = txt_username.getText();
+				dispose();				
 			}
+			
 		}
-		
-		
 	}
-	
 	public boolean checkAccount(String tk, String mk) {
+		System.out.println(tk + mk);
 		//Kiểm tra rỗng
 		if(tk.equals("")) {
 			JOptionPane.showMessageDialog(null,"Chưa nhập tài khoản");
@@ -292,6 +291,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		return false;
 	}
 
-
-
 }
+
+
+

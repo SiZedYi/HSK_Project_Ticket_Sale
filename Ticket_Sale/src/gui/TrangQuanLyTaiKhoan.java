@@ -159,7 +159,15 @@ public class TrangQuanLyTaiKhoan extends JPanel {
                     
                 } else if (isAdding) {
                 	if(!TaiKhoan_Dao.getInstance().getByAttribute("maTK", maTKField.getText()).isEmpty()) {
-                		JOptionPane.showMessageDialog(null, "Mã đã tồn tại");
+                		JOptionPane.showMessageDialog(null, "Mã tài khoản đã tồn tại");
+                		return;
+                	}
+                	if(!TaiKhoan_Dao.getInstance().getByAttribute("tenDangNhap", tenDangNhapField.getText()).isEmpty()) {
+                		JOptionPane.showMessageDialog(null, "Tên Đăng Nhập đã tồn tại");
+                		return;
+                	}
+                	if(matKhauField.getText().equals("")) {
+                		JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống");
                 		return;
                 	}
                 	if(NhanVien_Dao.getInstance().getByAttribute("maNV", nvField.getText()).isEmpty()) {

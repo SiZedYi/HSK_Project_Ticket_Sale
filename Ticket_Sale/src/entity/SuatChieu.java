@@ -7,12 +7,14 @@ public class SuatChieu {
 	private String maSC;
 	private Time thoiGianBatDau;
 	private Time thoiGianKetThuc;
+	private Phim phim;
 	private PhongChieu phongChieu;
-	public SuatChieu(String maSC, Time thoiGianBatDau, Time thoiGianKetThuc, PhongChieu phongChieu) {
+	public SuatChieu(String maSC, Time thoiGianBatDau, Time thoiGianKetThuc,Phim phim, PhongChieu phongChieu) {
 		super();
 		this.maSC = maSC;
 		this.thoiGianBatDau = thoiGianBatDau;
 		this.thoiGianKetThuc = thoiGianKetThuc;
+		this.phim = phim;
 		this.phongChieu = phongChieu;
 	}
 	public String getMaSC() {
@@ -23,6 +25,12 @@ public class SuatChieu {
 	}
 	public Time getThoiGianBatDau() {
 		return thoiGianBatDau;
+	}
+	public Phim getPhim() {
+		return phim;
+	}
+	public void setPhim(Phim phim) {
+		this.phim = phim;
 	}
 	public void setThoiGianBatDau(Time thoiGianBatDau) {
 		this.thoiGianBatDau = thoiGianBatDau;

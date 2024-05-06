@@ -1,3 +1,4 @@
+
 package gui;
 
 import javax.swing.JFrame;
@@ -32,8 +33,8 @@ public class ListMovie extends JPanel {
     private static final long serialVersionUID = 1L;
     private int prevY;
     private boolean isDragging = false;
-    private Phim_Dao movieDao = Phim_Dao.getInstance();
-    ArrayList<Phim> listMovieInDB = new ArrayList<Phim>();
+    private Phim_Dao movieDao = new Phim_Dao();
+    ArrayList<Phim> listMovieInDB = movieDao.getAllData();
     public ListMovie() {
         setLayout(new BorderLayout(0, 0));
 
@@ -48,11 +49,33 @@ public class ListMovie extends JPanel {
         listMovie.setLayout(new BoxLayout(listMovie, BoxLayout.Y_AXIS));
         scrollPane.setViewportView(listMovie);
         
-        movieDao = Phim_Dao.getInstance();
-        listMovieInDB = movieDao.getAllData();
-        if(movieDao == null) {
-        }
+        
         for (Phim phim : listMovieInDB) {
+            JPanel movieDetail = createMovieDetail(phim);
+            listMovie.add(movieDetail);
+        }
+
+        setVisible(true);
+    }
+    
+    public ListMovie(String maPhim, boolean isShowHeader) {
+        setLayout(new BorderLayout(0, 0));
+        
+        if(isShowHeader) {
+        	JPanel header = createHeader();
+        	add(header, BorderLayout.NORTH);
+        }
+
+        JScrollPane scrollPane = createScrollPane();
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel listMovie = new JPanel();
+        listMovie.setBackground(new Color(192, 192, 192));
+        listMovie.setLayout(new BoxLayout(listMovie, BoxLayout.Y_AXIS));
+        scrollPane.setViewportView(listMovie);
+        
+        ArrayList<Phim> getPhimById = movieDao.getByAttribute("maPhim", maPhim);
+        for (Phim phim : getPhimById) {
             JPanel movieDetail = createMovieDetail(phim);
             listMovie.add(movieDetail);
         }
@@ -64,7 +87,7 @@ public class ListMovie extends JPanel {
         JPanel header = new JPanel();
         header.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
 
-        JLabel movieDetailTitle = new JLabel("PHIM ĐANG CHIẾU");
+        JLabel movieDetailTitle = new JLabel("DANH SÁCH PHIM ĐANG CHIẾU");
         movieDetailTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
         header.add(movieDetailTitle);
 
@@ -125,7 +148,6 @@ public class ListMovie extends JPanel {
         movieImage.setMinimumSize(new Dimension(200, 100));
         movieImage.setMaximumSize(new Dimension(200, 100));
         movieImage.setPreferredSize(new Dimension(200, 100));
-        movieImage.setBorder(BorderFactory.createLineBorder(Color.black));
         movieDetail.add(movieImage);
 
         // Tạo và thêm hình ảnh vào movieImage
@@ -178,7 +200,6 @@ public class ListMovie extends JPanel {
     }
     
     public static void main(String[] args) {
-    	
     	JFrame frame = new JFrame("List Movie Demo");
     	frame.setSize(1000, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -189,7 +210,6 @@ public class ListMovie extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Phim_Dao phimDao = new Phim_Dao();
         // Tạo một instance của ListMovie
         ListMovie listMovie = new ListMovie();
         frame.getContentPane().add(listMovie);
@@ -199,3 +219,4 @@ public class ListMovie extends JPanel {
         frame.setVisible(true);
 	}
 }
+

@@ -1,7 +1,7 @@
 package enums;
 
 public enum Quyen {
-  NHANVIEN("Nhân viên"), QUANlY("Quản lý");
+  NHANVIEN("Nhân viên"), QUANlY("Quản lý"), KHONG("Không");
   private final String displayname;
 	private Quyen(String displayname) {
 		this.displayname = displayname;
@@ -20,6 +20,6 @@ public enum Quyen {
 	        }
 	    }
 	    System.out.println(quyenString);
-	    return null; 
+	    return KHONG; 
 	}
 }

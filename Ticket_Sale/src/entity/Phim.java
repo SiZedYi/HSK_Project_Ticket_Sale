@@ -14,9 +14,12 @@ public class Phim {
 	private double gia;
 	private ArrayList<TheLoai> theLoai;
 	private GioiHanTuoi gioiHanTuoi;
+
 	private String hinhAnh;
-	public Phim(String maPhim, String tenPhim, TrangThaiPhim trangThai, double gia,
-			ArrayList<TheLoai> theLoai, GioiHanTuoi gioiHanTuoi, String hinhAnh) {
+	
+	public Phim(String maPhim, String tenPhim, String anhPhim, TrangThaiPhim trangThai, double gia, ArrayList<TheLoai> theLoai,
+			GioiHanTuoi gioiHanTuoi) {
+
 		super();
 		this.maPhim = maPhim;
 		this.tenPhim = tenPhim;
@@ -24,8 +27,12 @@ public class Phim {
 		this.gia = gia;
 		this.theLoai = theLoai;
 		this.gioiHanTuoi = gioiHanTuoi;
-		this.hinhAnh = hinhAnh;
 	}
+	public Phim(String maPhim) {
+		super();
+		this.maPhim = maPhim;
+	}
+	
 	public String getMaPhim() {
 		return maPhim;
 	}
@@ -69,10 +76,6 @@ public class Phim {
 		this.hinhAnh = hinhAnh;
 	}
 	@Override
-	public int hashCode() {
-		return Objects.hash(maPhim);
-	}
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -85,11 +88,12 @@ public class Phim {
 	}
 	@Override
 	public String toString() {
+
 		return "Phim [maPhim=" + maPhim + ", tenPhim=" + tenPhim + ", trangThai=" + trangThai
 				+ ", gia=" + gia + ", theLoai=" + theLoai + ", gioiHanTuoi=" + gioiHanTuoi + ", hinhAnh=" + hinhAnh
 				+ "]";
+
 	}
-	
 	
 	
 }

@@ -15,6 +15,7 @@ import entity.NhanVien;
 import enums.GioiTinh;
 
 public class ChuongTrinh {
+
     public static void main(String[] args) {
     	//ConnectDB
 		ConnectDB dbConnection = new ConnectDB();
@@ -32,5 +33,11 @@ public class ChuongTrinh {
     	//////////////
         new Login();
 
+        try {
+        	ConnectDB.getInstance().connect();
+        }catch(SQLException e ) {
+        	e.printStackTrace();
+
+        }
     }
 }
