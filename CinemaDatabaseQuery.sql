@@ -193,3 +193,4 @@ INSERT INTO HoaDon (maHD, soTien, thoiGianXuat, phuongThucThanhToan) VALUES
 ('HD001', 150000, '2024-05-05 09:30:00', 'CASH'),
 ('HD002', 100000, '2024-05-05 13:30:00', 'MOMO');
 
+select * from NhanVien where maNV = N'NV001'

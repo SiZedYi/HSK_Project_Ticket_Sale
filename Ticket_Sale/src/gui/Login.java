@@ -124,8 +124,6 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 
         txt_username =  new JTextField(30);
 
-        JTextField txt_username =  new JTextField(30);
-
         txt_username.setBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5));
         JLabel lbl_usericon= new JLabel(new ImageIcon("data/icon/userLogin.png"));
         
@@ -250,7 +248,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		txt_username.setText("user1");
+		//txt_username.setText("user1");
 		if (o.equals(btnLogin)) {
 			System.out.println(txt_username.getText());
 			if(checkAccount(txt_username.getText(),String.valueOf(txt_password.getPassword()))){
@@ -266,7 +264,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		//Kiểm tra rỗng
 		if(tk.equals("")) {
 			JOptionPane.showMessageDialog(null,"Chưa nhập tài khoản");
-			return true;
+			return false;
 		}
 		if(mk.equals("")) {
 			JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống");
@@ -282,6 +280,8 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		else if(taiKhoan.size() == 1) {
 			if(taiKhoan.getFirst().getMatKhau().equals(mk)) {
 				LoginManager.currentUser = taiKhoan.getFirst().getMaTK();
+				LoginManager.account = (TaiKhoan) TaiKhoan_Dao.getInstance().getByAttribute("maTK", LoginManager.currentUser).getFirst();
+				
 				return true;
 			}
 			JOptionPane.showMessageDialog(null, "Sai mật khẩu");

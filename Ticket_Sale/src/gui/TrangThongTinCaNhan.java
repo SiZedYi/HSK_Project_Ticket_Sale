@@ -28,7 +28,6 @@ public class TrangThongTinCaNhan extends JPanel {
     private InputGroub quanLyGroup = new InputGroub(500, 40, "Quản lý:", 16, 200, 30, InputType.STRING);
 
     public TrangThongTinCaNhan() {
-    	System.out.println(LoginManager.currentUser);
         TaiKhoan tk = (TaiKhoan) TaiKhoan_Dao.getInstance().getByAttribute("tenDangNhap", LoginManager.currentUser).getFirst();
         this.nhanVien = (NhanVien) NhanVien_Dao.getInstance().getByAttribute("maNV", tk.getNhanVien().getMaNV()).getFirst();
         setupUI();

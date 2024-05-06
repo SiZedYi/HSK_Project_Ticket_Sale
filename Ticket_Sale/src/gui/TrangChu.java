@@ -16,10 +16,14 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dao.NhanVien_Dao;
+import dao.TaiKhoan_Dao;
 import entity.NhanVien;
+import entity.TaiKhoan;
+import enums.Quyen;
 
 public class TrangChu extends JFrame implements ActionListener, MouseListener {
 	
@@ -32,6 +36,7 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 		
 		initComponents();
 		setRole();
+		
 			
 	}
 	
@@ -220,8 +225,9 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
         
         lbl_phim.addMouseListener(this);
         lbl_ve.addMouseListener(this);
-		
-		
+        lbl_tk.addMouseListener(this);
+		lbl_nv.addMouseListener(this);
+		lbl_ttcn.addMouseListener(this);
 		
 		
 	}
@@ -249,23 +255,34 @@ public class TrangChu extends JFrame implements ActionListener, MouseListener {
 		 else if(e.getSource().equals(lbl_phim)) {
 			right_container.setVisible(true); // Hiển thị right_container
 	        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
-	        right_container.add(new QuanLyVe()); // Thêm QuanLyVe vào right_container
+	        right_container.add(new ListMovie()); // Thêm QuanLyVe vào right_container
 	        right_container.revalidate(); // Cập nhật giao diện
 	        right_container.repaint();
 		}
 		 else if(e.getSource().equals(lbl_tk)) {
-				right_container.setVisible(true); // Hiển thị right_container
-		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
-		        right_container.add(new TrangQuanLyTaiKhoan()); // Thêm QuanLyVe vào right_container
-		        right_container.revalidate(); // Cập nhật giao diện
-		        right_container.repaint();
+			 if(LoginManager.account.getQuyen() == Quyen.QUANlY ) {
+				 right_container.setVisible(true); // Hiển thị right_container
+			        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+			        right_container.add(new TrangQuanLyTaiKhoan()); // Thêm QuanLyVe vào right_container
+			        right_container.revalidate(); // Cập nhật giao diện
+			        right_container.repaint();
+			 }
+			 else {
+				 JOptionPane.showMessageDialog(null, "Không khả dụng");
+			 }
 			}
 		 else if(e.getSource().equals(lbl_nv)) {
-				right_container.setVisible(true); // Hiển thị right_container
-		        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
-		        right_container.add(new TrangQuanLyNhanVien()); // Thêm QuanLyVe vào right_container
-		        right_container.revalidate(); // Cập nhật giao diện
-		        right_container.repaint();
+			 if(LoginManager.account.getQuyen() == Quyen.QUANlY ) {
+				 right_container.setVisible(true); // Hiển thị right_container
+			        right_container.removeAll(); // Xóa tất cả các thành phần cũ trong right_container
+			        right_container.add(new TrangQuanLyNhanVien()); // Thêm QuanLyVe vào right_container
+			        right_container.revalidate(); // Cập nhật giao diện
+			        right_container.repaint();
+			 }
+			 else {
+					JOptionPane.showMessageDialog(null, "Không khả dụng");
+
+			 }
 			}
 		 
 		 else if(e.getSource().equals(lbl_ttcn)) {
